@@ -1,0 +1,96 @@
+{% load staticfiles %}<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta name="viewport" content="width=device-width">
+	<meta name="Content-Type" content="UTF-8">
+	<meta name="Content-Language" content="fr">
+	<meta property="og:site_name" content="Sherpa Consulting">
+	<meta property="og:url" content="">
+	<meta property="og:type" content="website">
+	<meta property="og:image" content="">
+	<meta name="format-detection" content="telephone=no">
+	
+	{% block seo %} {% endblock %}
+
+	<link rel="shortcut icon" type="img/png" href="">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
+	<link href="{% static 'planning/css/style.css' %}" rel="stylesheet">
+	<link href="{% static 'planning/css/main.css' %}" rel="stylesheet">
+  <link href="{% static 'planning/css/style1.css' %}" rel="stylesheet">
+	{% block link %} {% endblock %}
+</head>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show pace-done pace-done">
+{% include 'annexes/navbar_planning.html' %}
+  <div class="app-body" style="background-color: white">
+  	{% include 'annexes/sidebar.html' %}
+	<main class="main">
+      <div class="">
+        <div id="ui-view">
+          <div>
+            <div class="animated fadeIn" id="test">
+
+              <!-- message sucess et warning -->
+                {% if messages %}
+                  <ul class="messagelist">
+                  {% for message in messages %}
+                      <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                      <button type="button" class="close pclose-btn-alert" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      {{ message }}
+                    </div>
+                   {% endfor %}
+                  </ul>
+                {% endif %}
+              <!-- fin message sucess et warning -->
+                
+              {% block content %}
+
+              {% endblock %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+	{% block shemaorg %} {% endblock %}
+	<script src="{% static 'planning/js/jquery.min.js' %}"></script>
+    <script src="{% static 'planning/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'planning/js/modernizr.js' %}"></script>
+    <script src="{% static 'planning/js/coreui.min.js' %}"></script>
+	<noscript>Your browser does not support JavaScript!</noscript>
+
+
+<script>
+  window.setTimeout(function() {
+$(".alert").fadeTo(5000, 2000).slideUp(500, function(){
+    $(this).remove(); 
+});
+}, 2000);
+function toggleFullScreen() {
+if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
+(!document.mozFullScreen && !document.webkitIsFullScreen)) {
+if (document.documentElement.requestFullScreen) {  
+  document.documentElement.requestFullScreen();  
+} else if (document.documentElement.mozRequestFullScreen) {  
+  document.documentElement.mozRequestFullScreen();  
+} else if (document.documentElement.webkitRequestFullScreen) {  
+  document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+}  
+} else {  
+if (document.cancelFullScreen) {  
+  document.cancelFullScreen();  
+} else if (document.mozCancelFullScreen) {  
+  document.mozCancelFullScreen();  
+} else if (document.webkitCancelFullScreen) {  
+  document.webkitCancelFullScreen();  
+}  
+}  
+}
+</script>
+{% block script %} 
+
+{% endblock %}
+</body>
+</html>

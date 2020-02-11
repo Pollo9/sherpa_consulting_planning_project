@@ -1,0 +1,44 @@
+{% extends 'base_planning.html' %}
+{% load staticfiles %}
+
+{% block link %}
+
+{% endblock %}
+
+{% block content %}
+
+<a href="#" data-toggle="modal" data-target="#terms-txt" style="cursor: pointer;float: right;background-color: silver;color: #222;padding: 5px 12px 5px 12px;border-radius: 100%;">Pop-up</a>
+
+
+<div class="modal fade" id="terms-txt" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="termsLabel">Les détails de la simulation</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>Prix du/des produit(s) TTC: <b style="float: right;">{{prix_total_projet_sans_aide}}€</b></p>
+				{% if prime_cdp != 0 %}
+				<p>Déduction de l'aides CoupDepouce: <b style="float: right;color: #155724">- {{prime_cdp}}€</b></p>
+				<p style="font-size: 10px;margin-top: -25px;"><b>*Directement déduite du devis.</b></p>
+				{% endif %}
+				<hr>
+				<p>Total TTC sur le bon de commande: <b style="float: right;">{{prix_avec_aide_et_suplement}}€</b></p>
+				{% if prime_mpr != 0 %}
+				<hr>
+				<p>Éligible à l'aide MaPrimeRénov : <b style="float: right;color: #155724">- {{prime_mpr}}€</b></p>
+				<p style="font-size: 10px;margin-top: -25px;">Site : <a href="https://www.maprimerenov.gouv.fr/">www.maprimerenov.gouv.fr</a></p>
+				{% endif %}
+				<hr>
+				<p>Total TTC après déduction des aides: <b style="float: right;">{{prix_total}}€</b></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn_1" data-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+{% endblock %}

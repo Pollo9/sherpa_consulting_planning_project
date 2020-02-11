@@ -1,0 +1,31 @@
+{% extends "account/base.html" %}
+
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+
+
+
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">{% csrf_token %}
+   
+  
+  {{ form.as_p }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <div class="row align-items-center mb-5">
+    <div class="col-5 col-sm-6">
+      <span class="small text-muted">Vous avez déjà un compte ? </span>
+      <a class="small" href="{{ login_url }}">Connectez-vous</a>
+    </div>
+
+    <div class="col-7 col-sm-6 text-right">
+      <button type="submit" class="btn btn-dark transition-3d-hover">Créer mon compte</button>
+    </div>
+  </div>
+</form>
+
+{% endblock %}

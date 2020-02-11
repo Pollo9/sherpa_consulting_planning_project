@@ -1,0 +1,39 @@
+{% load staticfiles %}
+
+	<header class="app-header navbar">
+		<button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<a class="navbar-brand" style="margin-left: 25px;" href="">
+			<!-- Logo Sherpa Consulting : -->
+			<!-- <img class="" src="" width="180" height="45" alt="" style="padding: 5px;">
+			<img class="navbar-brand-minimized" src="" width="30" height="30" alt=""> -->
+		</a>
+		<button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<ul class="nav navbar-nav ml-auto">
+			<li class="dropdown">
+				<a class="count-info" href="" aria-expanded="false" title="Notifications">
+					<em class="icon-bell"></em>
+					{% if nb_lead != 0 %}
+						<span class="label label-info">{{nb_lead}}</span>
+					{% endif %}
+				</a>
+			</li>
+			<li class="dropdown">
+				<a class="count-info" href="" aria-expanded="false" title="Réglage">
+					<em class="icon-settings"></em>
+				</a>
+			</li>
+			<li class="dropdown">
+				<form id='logout' class="" method="post" action="{% url 'account_logout' %}">{% csrf_token %} {% if redirect_field_value %}
+					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />{% endif %}
+					
+						<a style="position: relative;display: block;padding: 10px 15px;" onclick="document.forms['logout'].submit();" class="count-info" data-toggle="dropdown" href="#" aria-expanded="false" title="Se déconnecter">
+							<em class="icon-power"></em>
+						</a>
+				</form>
+			</li>
+		</ul>
+	</header>

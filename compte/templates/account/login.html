@@ -1,0 +1,65 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+
+{% block content %}
+
+<!--
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button class="submitg" type="submit" style="margin-top:-10px;">{% trans "Sign In" %}</button>
+</form>
+
+
+-->
+<style type="text/css">
+  li
+  {
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .4rem;
+    color: #ffffff;
+    background-color: #ff8d00ab;
+    border-color: #ff8d0091;
+    list-style: none;
+
+  }
+  ul
+  {
+    margin-block-start: 0;
+    padding-inline-start: 0;
+  }
+</style>
+
+<!-- Form -->
+<form class="login" method="POST" action="{% url 'account_login' %}">{% csrf_token %}
+
+  {{ form.as_p }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  
+	<a class="link-muted text-capitalize font-weight-normal" style="float: right;" href="{% url 'account_reset_password' %}">Mot de passe oublié</a>
+  <!-- Button -->
+  <div class="row align-items-center mb-5">
+    
+
+    <div class="col-12 text-left">
+      <button type="submit" class="btn btn-dark transition-3d-hover">Connexion</button>
+    </div>
+  </div>
+  <!-- End Button -->
+</form>
+<!-- End Form -->
+
+{% endblock %}
