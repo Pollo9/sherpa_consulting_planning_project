@@ -7,3 +7,8 @@ def index(request):
 	context = locals()
 	template = "index.html"
 	return render(request,template,context)
+
+def messagerie(request):
+	context = locals()
+	template = "messagerie.html"
+	return render(request,template,context)
