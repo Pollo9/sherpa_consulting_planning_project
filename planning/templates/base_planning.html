@@ -16,7 +16,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
 	<link href="{% static 'planning/css/style.css' %}" rel="stylesheet">
 	<link href="{% static 'planning/css/main.css' %}" rel="stylesheet">
-  <link href="{% static 'planning/css/style1.css' %}" rel="stylesheet">
+  
 	{% block link %} {% endblock %}
 </head>
 
@@ -52,39 +52,41 @@
     </main>
 	{% block shemaorg %} {% endblock %}
 	<script src="{% static 'planning/js/jquery.min.js' %}"></script>
-    <script src="{% static 'planning/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'planning/js/bootstrap.min.js' %}"></script>
 	<script src="{% static 'planning/js/modernizr.js' %}"></script>
-    <script src="{% static 'planning/js/coreui.min.js' %}"></script>
+  <script src="{% static 'planning/js/coreui.min.js' %}"></script>
 	<noscript>Your browser does not support JavaScript!</noscript>
 
 
-<script>
-  window.setTimeout(function() {
-$(".alert").fadeTo(5000, 2000).slideUp(500, function(){
-    $(this).remove(); 
-});
-}, 2000);
-function toggleFullScreen() {
-if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
-(!document.mozFullScreen && !document.webkitIsFullScreen)) {
-if (document.documentElement.requestFullScreen) {  
-  document.documentElement.requestFullScreen();  
-} else if (document.documentElement.mozRequestFullScreen) {  
-  document.documentElement.mozRequestFullScreen();  
-} else if (document.documentElement.webkitRequestFullScreen) {  
-  document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
-}  
-} else {  
-if (document.cancelFullScreen) {  
-  document.cancelFullScreen();  
-} else if (document.mozCancelFullScreen) {  
-  document.mozCancelFullScreen();  
-} else if (document.webkitCancelFullScreen) {  
-  document.webkitCancelFullScreen();  
-}  
-}  
-}
-</script>
+  <script>
+    window.setTimeout(function() {
+      $(".alert").fadeTo(5000, 2000).slideUp(500, function(){
+          $(this).remove(); 
+      });
+      }, 2000);
+    function toggleFullScreen() {
+      if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
+      (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+      if (document.documentElement.requestFullScreen) {  
+        document.documentElement.requestFullScreen();  
+      } else if (document.documentElement.mozRequestFullScreen) {  
+        document.documentElement.mozRequestFullScreen();  
+      } else if (document.documentElement.webkitRequestFullScreen) {  
+        document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+      }  
+      } 
+      else {  
+        if (document.cancelFullScreen) {  
+            document.cancelFullScreen();  
+          } else if (document.mozCancelFullScreen) {  
+            document.mozCancelFullScreen();  
+          } else if (document.webkitCancelFullScreen) {  
+            document.webkitCancelFullScreen();  
+          }  
+      }  
+    }
+  </script>
+
 {% block script %} 
 
 {% endblock %}

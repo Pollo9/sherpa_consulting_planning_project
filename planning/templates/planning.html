@@ -1,0 +1,269 @@
+{% extends 'base_planning.html' %}
+{% load staticfiles %}
+
+{% block link %}
+<link href="{% static 'planning/css/planning.css' %}" rel="stylesheet">
+<link href="{% static 'planning/css/core/main.css' %}" rel="stylesheet" />
+<link href="{% static 'planning/css/daygrid/main.css' %}" rel="stylesheet" />
+<link href="{% static 'planning/css/timegrid/main.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<style>
+
+  .calendar {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  p{
+  	margin-bottom: 0;
+  }
+
+</style>
+
+<div class="calendar" id='calendar'></div>
+
+<section class="navbar_planning">
+
+	<ul class="all_first_line">
+		<li class="titre_buttons">
+			<p class="titre">Planning 2020</p>
+		</li>
+		<span class="buttons">
+			<li class="titre_buttons">
+				<a href="#" data-toggle="modal" data-target="#terms-txt" style="height: 45px;cursor: pointer;float: right;color: #222;padding: 5px 12px 5px 12px; border-style: solid;">
+					<div class="container_filter_button">
+						<em style="color: black;font-size: 21px;margin-right: 4px;" class="icon-plus"></em>
+						<p>Filter</p>
+					</div>
+				</a>
+			</li>
+			<li class="titre_buttons">
+				<a href="#" data-toggle="modal" data-target="#terms-txt" style="cursor: pointer;float: right;color: #222;padding: 5px 12px 5px 12px;border-radius: 100%;"><em style="color: black;font-size: 37px;" class="icon-cloud-upload"></em>
+				</a>
+			</li>
+			<li class="titre_buttons">
+				<a href="#" data-toggle="modal" data-target="#terms-txt" style="cursor: pointer;float: right;color: #222;padding: 5px 12px 5px 12px;border-radius: 100%;"><em style="color: black;font-size: 37px;" class="icon-plus"></em>
+				</a>
+			</li>
+		</span>
+	</ul>
+
+
+	<div class="all_second_line">
+		<div class="titre_buttons">
+			<a class="mois" id="1" style="border-left: solid;border-left-width: 1px;border-left-color: #ddd;">			
+				<p>Janvier</p>
+			</a>
+		</div>
+		<div class="titre_buttons">
+			<a class="mois" id="2">			
+				<p>Février</p>
+			</a>
+		</div>
+		<div class="titre_buttons">
+			<a class="mois" id="3">			
+				<p>Mars</p>
+			</a>
+		</div>
+		<div class="titre_buttons">
+			<a class="mois" id="4">			
+				<p>Avril</p>
+			</a>
+		</div>
+		<div class="titre_buttons">
+			<a class="mois" id="5">			
+				<p>Mai</p>
+			</a>
+		</div>
+		<div class="titre_buttons">
+			<a class="mois" id="6">			
+				<p>Juin</p>
+			</a>
+		</div>
+		<div class="titre_buttons">
+			<a class="mois" id="7">			
+				<p>Juillet</p>
+			</a>
+		</div>
+		<div class="titre_buttons">
+			<a class="mois" id="8">			
+				<p>Août</p>
+			</a>
+		</div>
+		<div class="titre_buttons">
+			<a class="mois" id="9">			
+				<p>Septembre</p>
+			</a>
+		</div>
+		<div class="titre_buttons">
+			<a class="mois" id="10">			
+				<p>Octobre</p>
+			</a>
+		</div>
+		<div class="titre_buttons">
+			<a class="mois" id="11">			
+				<p>Novembre</p>
+			</a>
+		</div>
+		<div class="titre_buttons">
+			<a class="mois"  id="12">			
+				<p>Décembre</p>
+			</a>
+		</div>
+	</div>
+</section>
+
+
+<section class="table" id="table">
+
+	<div class="first_table" id="first_table">
+		<span class="case_jours" id="case_jours">Jours</span>
+
+		<!-- Les dates des jours -->
+
+	</div>
+
+	<div class="formateurs_grids" id="grids">
+
+		<!-- Les formateurs -->
+		<div class="second_table" id="table_formateurs">				
+		</div>
+
+		<!-- Toutes les cases  -->
+
+	</div>
+
+</section>
+
+<!-- forme d'une mission dans le planning -->
+<!-- <button id="1-17/2" class="missions" data-toggle="modal" data-target="#terms-txt"> Lorem Ipsum </button> -->
+
+
+<!-- Template de la pop-up -->
+<i class="icone-plus"></i>
+<div class="modal fade" id="terms-txt" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="termsLabel">Les détails de la simulation</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>Prix du/des produit(s) TTC: <b style="float: right;">{{prix_total_projet_sans_aide}}€</b></p>
+				{% if prime_cdp != 0 %}
+				<p>Déduction de l'aides CoupDepouce: <b style="float: right;color: #155724">- {{prime_cdp}}€</b></p>
+				<p style="font-size: 10px;margin-top: -25px;"><b>*Directement déduite du devis.</b></p>
+				{% endif %}
+				<hr>
+				<p>Total TTC sur le bon de commande: <b style="float: right;">{{prix_avec_aide_et_suplement}}€</b></p>
+				{% if prime_mpr != 0 %}
+				<hr>
+				<p>Éligible à l'aide MaPrimeRénov : <b style="float: right;color: #155724">- {{prime_mpr}}€</b></p>
+				<p style="font-size: 10px;margin-top: -25px;">Site : <a href="https://www.maprimerenov.gouv.fr/">www.maprimerenov.gouv.fr</a></p>
+				{% endif %}
+				<hr>
+				<p>Total TTC après déduction des aides: <b style="float: right;">{{prix_total}}€</b></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn_1" data-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}
+
+
+{% block script %} 
+<script src="{% static 'planning/js/moment-with-locales.min.js' %}"></script> <!-- import de moment.js pour les dates -->
+<script type="text/javascript">
+
+	// Affichage des formateurs dans la barre du dessus
+	{% for formateur in formateurs %}
+			var new_code_formateurs = [`<div class="formateurs">` + "{{ formateur.nom }}" + `</div>`];
+			new_code_formateurs.push
+			document.getElementById("table_formateurs").insertAdjacentHTML('beforeend',new_code_formateurs);
+	{% endfor %}
+
+	moment.locale('fr'); // definition de l'heure française
+
+	// mettre en couleur le mois ou on se trouve
+	let date = moment().format("M");
+	document.getElementById(date).className += " this_month";
+
+
+	for (let i = 0; i < 250; i++) { // nombre de jours chargés
+
+		// incrémentation d'une ligne (de cases)
+		var parent_line_grid = [`<div class="line_grids" id="line_grids` + i + `"></div>`];
+		parent_line_grid.push()
+		document.getElementById("grids").insertAdjacentHTML('beforeend', parent_line_grid);
+
+		
+		// variables pour les dates
+	  	let jours_lettres = moment().add(i,'days').format("ddd"); // ex : lun.
+	  	let jours_chiffres = moment().add(i,'days').format("DD"); // 01,02,...,31
+	  	let mois = moment().add(i,'days').format("M"); // 1,2,...,12
+
+
+	  	// quand on arrive sur vendredi on ajoute une ligne vide pour séparer les semaines
+	  	if(jours_lettres[0] == 'v'){ 
+
+	  		// incrémentation de cases dans une ligne (celle de vendredi)
+	  		{% for formateur in formateurs %}
+				var grid = [`<div class="grid" id="` + "{{ formateur.nom }}" + `-` + jours_lettres.toString() + `-` + jours_chiffres.toString() + `"><label style="opacity:0;">Invisible</label></div>`];
+				grid.push()
+				document.getElementById("line_grids" + i ).insertAdjacentHTML('beforeend', grid);
+			{% endfor %}
+
+			// Ligne ou il n'y a pas de jour donc ligne vide
+			var parent_line_grid = [`<div class="line_grids" id="no_line` + i + `"></div>`]; //changement d'id pour la ligne vide
+			parent_line_grid.push()
+			document.getElementById("grids").insertAdjacentHTML('beforeend', parent_line_grid); //on incrémente la ligne vide
+			// on implémente les cases de la lignes vides avec juste un border bottom
+			{% for formateur in formateurs %}			
+				var no_line = [`<div class="no_line"><label style="opacity:0;">Invisible</label></div>`];
+				no_line.push()
+				document.getElementById("no_line" + i).insertAdjacentHTML('beforeend', no_line);
+			{% endfor %}
+
+
+			// Création et implémentation de la date + de la transition de semaine(un vendredi) -> colonne de guauche
+	  		var new_code = [`<div class="jours"><span class="texte_jours">` + jours_lettres.toString() +`   `  + jours_chiffres.toString() + "/"  + mois.toString() + `</span></div>`];
+	  		var space_line = [`<div id="space" class="jours"><span style="text-align:center;" class="texte_jours"> --- </span></div>`];
+			new_code.push();
+			space_line.push();
+			document.getElementById("first_table").insertAdjacentHTML('beforeend',new_code);
+			document.getElementById("first_table").insertAdjacentHTML('beforeend',space_line);
+			i += 2 // pas de weekend
+	  	}
+
+	  	else{
+	  		// incrémentation de cases dans une ligne 
+	  		{% for formateur in formateurs %}
+	  			var grid = [`<div class="grid" id="` + "{{ formateur.nom }}" + `-` + jours_lettres.toString() + `-` + jours_chiffres.toString() + `"><label style="opacity:0;">Invisible</label></div>`];
+				grid.push()
+				document.getElementById("line_grids" + i ).insertAdjacentHTML('beforeend', grid);	  								
+			{% endfor %}
+
+			// Création et implémentation de la date (bord guauche du planning)
+	  		var new_code = [`<div class="jours"><span class="texte_jours">` + jours_lettres.toString() +`   `  + jours_chiffres.toString() + "/"  + mois.toString() + `</span></div>`];
+			new_code.push();
+			document.getElementById("first_table").insertAdjacentHTML('beforeend',new_code);
+
+	  	}		
+	}		
+</script>
+
+{% endblock %}
+

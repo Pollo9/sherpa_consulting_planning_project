@@ -1,0 +1,100 @@
+.titre_buttons{
+	float: left;
+}
+
+.buttons{
+	float: right;
+}
+
+.all_first_line{
+    width: 100%;
+    height: auto;
+    list-style: none;
+}
+
+.all_second_line{
+    width: 100%;
+    height: auto;
+    list-style: none;
+}
+
+.titre{
+	font-size: 26px;
+	color: #2f353a;
+}
+
+.container_filter_button{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	margin-top: 5px;
+}
+
+.navbar_planning{
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 18px;
+}
+
+
+.case_jours{
+	text-align: center;
+	width: 92px;
+	border-style: solid;
+	display: block;
+}
+
+
+.all_table{
+	margin-left: 18px;
+}
+
+.jours{
+	width: 92px;
+	border-style: solid;
+	border-top: none;
+	border-bottom: none;
+}
+
+.jours_end{
+	width: 92px;
+	border-style: solid;
+	border-top: none;
+}
+
+
+.texte_jours{
+	margin-left: 8px;
+}
+
+
+.formateurs{
+	text-align: center;
+	width: 128px;
+	border-style: solid;
+	height: 26px;
+	border-left: none;
+}
+
+
+.table{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	margin-left: 57px;
+	overflow: scroll;
+	width: 90%;
+}
+
+.second_table{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	margin-left: 89px;
+	margin-bottom: 56px;
+}
+
+.first_table{
+	position: fixed;
+}

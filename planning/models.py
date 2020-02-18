@@ -24,3 +24,33 @@ class Bdd_consultants(models.Model):
 	
 	def __str__(self):
 		return self.nom
+
+
+class Bdd_formateurs(models.Model):
+
+	id = models.AutoField(primary_key = True)
+	nom = models.CharField(default=' ',max_length=400)
+	
+	
+	class Meta:
+		verbose_name = "Formateur"
+		ordering = ['id']
+	
+	def __str__(self):
+		return self.nom
+
+class Bdd_missions(models.Model):
+
+	id = models.AutoField(primary_key = True)
+	nom = models.CharField(default=' ',max_length=400)
+	description = models.CharField(default=' ',max_length=400)
+	formateur = models.CharField(default=' ',max_length=400)
+	date = models.DateField(default=' ',max_length=400)
+	
+	
+	class Meta:
+		verbose_name = "Mission"
+		ordering = ['id']
+	
+	def __str__(self):
+		return self.nom
