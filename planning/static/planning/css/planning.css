@@ -1,3 +1,9 @@
+.really_all_planning{
+	display: flex;
+	flex-direction: column;
+	align-items: space-between;
+}
+
 .titre_buttons{
 	float: left;
 }
@@ -93,9 +99,8 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
-	margin-left: 57px;
-	width: 90%;
-	height: 435px;
+	width: 100%;
+	height: 500px;
 	overflow: scroll;
 	
 }
@@ -188,4 +193,10 @@
 
 .no_line{
 	height: 28px;
+}
+
+
+
+.today{
+	background-color: red;
 }

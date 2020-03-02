@@ -1,11 +1,163 @@
 {% extends 'base_planning.html' %}
 {% load staticfiles %}
 
+
 {% block link %}
 <link href="{% static 'planning/css/messagerie.css' %}" rel="stylesheet">
 {% endblock %}
 
+
 {% block content %}
+<div class="container application">
+  <div class="row app-one">
+    <div class="col-sm-4 side">
+      <div class="side-one">
+
+        <div class="row heading">
+          <div class="col-sm-10 col-xs-10 heading-name">
+            <p class="heading-name-meta" id="heading-name-meta">Sherpa Consulting
+            </p>
+          </div>
+          {% if consultant_selectionne %}
+          <div class="col-sm-2 col-xs-2 heading-compose  pull-right">
+            <a href="{% url 'messages' consultant_selectionne.id consultant_selectionne.nom 0 %}">
+              <i class="fa fa-redo-alt" aria-hidden="true" align></i>
+            </a>
+          </div>
+          {% endif %}
+        </div>
+
+        <!--<div class="row searchBox">
+          <div class="col-sm-12 searchBox-inner">
+            <div class="form-group has-feedback">
+              <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Search">
+            </div>
+          </div>
+        </div>-->
+
+        <div class="row sideBar">
+          <div>
+          {% for consultant in consultants %}
+          {% if consultant.nom != "Consulting" and consultant.prenom != "Sherpa" %}
+          {% if consultant.id == consultant_selectionne.id %}
+            <a href="{% url 'messages' consultant.id consultant.nom 0 %}"><div class="row sideBar-body-selectionne">
+          {% else %}
+            <a href="{% url 'messages' consultant.id consultant.nom 0 %}"><div class="row sideBar-body">
+          {% endif %}
+              <div class="col-sm-12 col-xs-12 sideBar-main">
+                <div class="row">
+                  <div class="col-sm-10 col-xs-10 sideBar-name">
+                    <span class="name-meta" id="name-meta">
+                      {{ consultant.prenom }} {{ consultant.nom }}
+                    </span>
+                  </div>
+                  <div class="col-sm-2 col-xs-2 sideBar-notif">
+                    {% for k,v in notif.items %}
+                    {% if k == consultant.id and v > 0 and v < 10 %}
+                    <span class="notif-meta">
+                      {{ v }}
+                    </span>
+                    {% elif k == consultant.id and v > 9 %}
+                    <span class="notif-meta">
+                      9+
+                    </span>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div></a>
+          {% endif %}
+          {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    {% if consultant_selectionne %}
+    <div class="col-sm-8 conversation">
+      <div class="row heading">
+        <div class="col-sm-8 col-xs-7 heading-name">
+          <p class="heading-name-meta" id="heading-name-meta">{{ consultant_selectionne.prenom }} {{ consultant_selectionne.nom }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row message" id="conversation">
+
+        <div class="row message-previous">
+        {% if see_all == 0 and msg_count > 10 %}
+          <div class="col-sm-12 previous">
+            <a href="{% url 'messages' consultant_selectionne.id consultant_selectionne.nom 1 %}" id="show-previous" name="20">
+              Montrer tous les messages
+            </a>
+          </div>
+        {% endif %}
+        </div>
+
+        <div class="message-wrapper" id="message-wrapper">
+          {% for message in msg %}
+          {% if message.receveur.nom == "Consulting" and message.envoyeur.nom == consultant_selectionne.nom %}
+          <div class="row message-body">
+            <div class="col-sm-12 message-main-receiver">
+              <div class="receiver">
+                <div class="message-text">
+                  {{ message.message }}
+                </div>
+                <span class="message-time pull-right">
+                  {{ message.date }}
+                </span>
+              </div>
+            </div>
+          </div>
+          {% elif message.envoyeur.nom == "Consulting" and message.receveur.nom == consultant_selectionne.nom %}
+          <div class="row message-body">
+            <div class="col-sm-12 message-main-sender">
+              <div class="sender">
+                <div class="message-text">
+                  {{ message.message }}
+                </div>
+                <span class="message-time pull-right">
+                  {{ message.date }}
+                </span>
+              </div>  
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <form class="row reply" action="" method="POST" id="post-form"> {% csrf_token %}
+        <div class="col-sm-10 col-xs-10 reply-main">
+          <textarea class="form-control" rows="1" name="message-texte" placeholder="Entrez votre message"></textarea>
+        </div>
+        <div class="col-sm-2 col-xs-2 reply-send">
+          <input type="submit" name="message-envoyer" class="bouton-envoyer">
+        </div>
+      </form>
+
+    </div>
+    {% else %}
+    <div class="col-sm-8 conversation">
+      <div class="row heading">
+      </div>
+      <p id="texte-contact">Selectionnez un contact</p>
+    </div>
+
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}
 
 
+{% block script %} 
+<script src="https://kit.fontawesome.com/1786db8e17.js" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  element = document.getElementById('message-wrapper');
+  element.scrollTop = element.scrollHeight;
+</script>
 {% endblock %}

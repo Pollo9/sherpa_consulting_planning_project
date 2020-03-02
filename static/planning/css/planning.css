@@ -1,3 +1,9 @@
+.really_all_planning{
+	display: flex;
+	flex-direction: column;
+	align-items: space-between;
+}
+
 .titre_buttons{
 	float: left;
 }
@@ -13,9 +19,11 @@
 }
 
 .all_second_line{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
     width: 100%;
     height: auto;
-    list-style: none;
 }
 
 .titre{
@@ -41,8 +49,16 @@
 .case_jours{
 	text-align: center;
 	width: 92px;
+	border-color: #ddd;
 	border-style: solid;
+	border-width: 1px;
 	display: block;
+	position: sticky;
+    left: 0;
+    top: 0;
+    background-color: white;
+    height: 26px;
+    z-index: 10;
 }
 
 
@@ -52,16 +68,14 @@
 
 .jours{
 	width: 92px;
+	border-color: #ddd;
 	border-style: solid;
+	border-width: 1px;
 	border-top: none;
-	border-bottom: none;
+	height: 28px;
+
 }
 
-.jours_end{
-	width: 92px;
-	border-style: solid;
-	border-top: none;
-}
 
 
 .texte_jours{
@@ -72,7 +86,10 @@
 .formateurs{
 	text-align: center;
 	width: 128px;
+	min-width: 128px;
+	border-color: #ddd;
 	border-style: solid;
+	border-width: 1px;
 	height: 26px;
 	border-left: none;
 }
@@ -82,19 +99,104 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
-	margin-left: 57px;
+	width: 100%;
+	height: 500px;
 	overflow: scroll;
-	width: 90%;
+	
 }
 
 .second_table{
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
-	margin-left: 89px;
-	margin-bottom: 56px;
+	position: sticky;
+	top: 0;
+	z-index: 2;
+	background-color: white;
 }
 
 .first_table{
-	position: fixed;
+	position: sticky;
+  	left: 0;
+  	z-index: 4;
+  	background-color: white;
+  	height: max-content;
+}
+
+.formateurs_grids{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	z-index: 1;
+	height: max-content;
+}
+
+.line_grids{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	position: unset;
+	z-index: 1;
+}
+
+.grid{
+	width: 128px;
+	border-color: #ddd;
+	border-style: solid;
+	border-width: 1px;
+	border-top: none;
+	border-left: none;
+	height: 28px;
+
+}
+
+/*class des cases de la ligne de transition des semaines */
+.no_line{
+	width: 128px;
+	border-color: #ddd;
+	border-style: solid;
+	border-width: 1px;
+	border-left: none;
+	border-top: none;
+	border-right: none;
+	height: 28px;
+}
+
+.mois{
+	height: 45px;
+	cursor: pointer;
+	float: right;
+	color: #222;
+	padding: 5px 12px 5px 12px;
+	border-color: #ddd;
+	border-style: solid;
+	border-width: 1px;
+	border-left:none;
+	text-align: center;
+	width: 100px;
+}
+
+.this_month{
+	background-color: #ddd;
+}
+
+
+.missions{
+	background-color: #6262ea;
+    padding-left: 23px;
+    padding-right: 23px;
+    padding-bottom: 6px;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+}
+
+.no_line{
+	height: 28px;
+}
+
+
+
+.today{
+	background-color: red;
 }

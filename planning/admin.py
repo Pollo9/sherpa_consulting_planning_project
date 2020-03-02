@@ -6,6 +6,10 @@ class Bdd_consultantsAdmin(admin.ModelAdmin):
 	search_fields = ['titre']
 	list_display = ('id','nom','prenom','diminutif','nom_de_compte','mdp', 'telephone','mail','adresse')
 
+class Bdd_messagesAdmin(admin.ModelAdmin):
+	search_fields = ['titre']
+	list_display = ('id','envoyeur','receveur','message','date','lu')
+
 class Bdd_formateursAdmin(admin.ModelAdmin):
 	search_fields = ['titre']
 	list_display = ('id','nom')
@@ -17,5 +21,6 @@ class Bdd_missionsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Bdd_consultants,Bdd_consultantsAdmin)
+admin.site.register(Bdd_messages,Bdd_messagesAdmin)
 admin.site.register(Bdd_formateurs,Bdd_formateursAdmin)
 admin.site.register(Bdd_missions,Bdd_missionsAdmin)

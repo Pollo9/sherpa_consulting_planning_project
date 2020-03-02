@@ -25,7 +25,7 @@ SECRET_KEY = ')y&z)ngwby=e!37+e67lml=b3_bx1pl6lyebe3^!rk@qgiq&yl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['fb349ece.ngrok.io','127.0.0.1','localhost']
 
 
 # Application definition
@@ -134,3 +134,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+TWILIO_AUTH_TOKEN = 'f20ac47c4086e5e6756bd2e005053d06'
+TWILIO_ACCOUNT_SID = 'ACa76da122a7d503283f94f586795d5b4a'
+TWILIO_NUMBER = '+16786819248'

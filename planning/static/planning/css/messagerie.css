@@ -1,0 +1,395 @@
+#ui-view, #test {
+  height: 100%;
+}
+
+p {
+  margin: 0;
+}
+
+.container div, .container span {
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.application {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .06), 0 2px 5px 0 rgba(0, 0, 0, .2);
+  max-width: none !important;
+}
+
+.container .app-one {
+  background-color: #f7f7f7;
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .06), 0 2px 5px 0 rgba(0, 0, 0, .2);
+}
+
+.container .side {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+.container .side-one {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+  display: block;
+  top: 0;
+}
+
+.container .heading {
+  padding: 10px 16px 10px 15px;
+  margin: 0;
+  height: 60px;
+  width: 100%;
+  background-color: #eee;
+  z-index: 1000;
+}
+
+.container .heading-name {
+  padding: 0;
+}
+
+.container .heading-name-meta {
+  font-weight: 700;
+  padding: 10px 5px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #000;
+  display: block;
+}
+
+.container .heading-compose {
+  padding: 0;
+}
+
+.container .heading-compose i {
+  text-align: center;
+  margin-top: 10px;
+  color: #93918f;
+  cursor: pointer;
+  transition: all .5s ease-in-out;
+  width: 100%;
+  font-size: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container .heading-compose i:hover {
+  color: #000;
+  transform: rotate(180deg);
+}
+
+.container .searchBox {
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 60px;
+  width: 100%;
+}
+
+.container .searchBox-inner {
+  height: 100%;
+  width: 100%;
+  padding: 10px !important;
+  background-color: #fbfbfb;
+}
+
+.container .searchBox-inner input:focus {
+  outline: none;
+  border: none;
+}
+
+.container .sideBar {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: #fff;
+  overflow-y: auto;
+  border: 1px solid #f7f7f7;
+  height: calc(100% - 120px);
+}
+
+.container .sideBar a:hover {
+  text-decoration: none;
+}
+
+.container .sideBar-body {
+  position: relative;
+  padding: 10px !important;
+  border-bottom: 1px solid #f7f7f7;
+  height: 72px;
+  margin: 0 !important;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.container .sideBar-body-selectionne {
+  position: relative;
+  padding: 10px !important;
+  border-bottom: 1px solid #f7f7f7;
+  background-color: #f2f2f2;
+  height: 72px;
+  margin: 0 !important;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.container .sideBar-body:hover {
+  background-color: #f2f2f2;
+}
+
+.container .sideBar-main {
+  padding-top: 5px;
+}
+
+.container .sideBar-main .row {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.container .sideBar-name {
+  padding: 10px 30px 0 30px;
+}
+
+.container .name-meta {
+  font-size: 100%;
+  padding: 1% !important;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #000;
+}
+
+.container .sideBar-notif {
+  padding: 5px 0;
+}
+
+.container .notif-meta {
+  display: block;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  border-radius: 50%;
+  background-color: #f74044;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+}
+
+.container .conversation {
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 100%;
+  border-left: 1px solid rgba(0, 0, 0, .08);
+}
+
+.container .message {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 1px solid #f7f7f7;
+  height: calc(100% - 120px);
+}
+
+.container .message-previous {
+  margin : 0 !important;
+  padding: 0 !important;
+  height: 40px;
+  width: 100%;
+}
+
+.container .previous {
+  font-size: 15px;
+  text-align: center;
+  padding: 10px;
+}
+
+.container #show-previous {
+  text-decoration: none;
+  font-weight: bold;
+  color: #000;
+}
+
+.container #show-previous:hover {
+  color: blue;
+}
+
+.container .message-wrapper {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+}
+
+.container .message-body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  height: auto;
+}
+
+.container .message-main-receiver {
+  padding: 3px 20px !important;
+  max-width: 60%;
+}
+
+.container .message-main-sender {
+  padding: 3px 20px !important;
+  margin-left: 40% !important;
+  max-width: 60%;
+}
+
+.container .message-text {
+  margin: 0 !important;
+  padding: 5px !important;
+  word-wrap:break-word;
+  font-weight: 200;
+  font-size: 14px;
+  padding-bottom: 0 !important;
+}
+
+.container .message-time {
+  margin: 0 !important;
+  margin-left: 50px !important;
+  font-size: 12px;
+  text-align: right;
+  color: #9a9a9a;
+}
+
+.container .receiver {
+  width: auto !important;
+  padding: 4px 10px 7px !important;
+  border-radius: 10px 10px 10px 0;
+  background: #ffffff;
+  font-size: 12px;
+  word-wrap: break-word;
+  display: inline-block;
+}
+
+.container .sender {
+  float: right;
+  width: auto !important;
+  background: #dcf8c6;
+  border-radius: 10px 10px 0 10px;
+  padding: 4px 10px 7px !important;
+  font-size: 12px;
+  display: inline-block;
+  word-wrap: break-word;
+}
+
+.container .reply {
+  height: 60px;
+  width: 100%;
+  background-color: #f5f1ee;
+  margin: 0 !important;
+  z-index: 1000;
+}
+
+.container .reply-main {
+  padding: 10px;
+}
+
+.container .reply-main textarea {
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+  outline: none;
+  border: none;
+  text-indent: 5px;
+  font-size: 16px;
+}
+
+.container .reply-main textarea:focus {
+  outline: none;
+  border: none;
+  text-indent: 5px;
+  box-shadow: 1px 1px 5px grey;
+}
+
+.container .form-control {
+  border-radius: 20px;
+}
+
+.container .reply-send {
+  padding: 10px;
+  text-align: center;
+}
+
+.container .reply-send input:hover {
+  background-color: #dcf8c6;
+  border-color: #000;
+  box-shadow: 1px 1px 5px grey;
+  transition: all .3s ease-in-out;
+}
+
+.container .bouton-envoyer {
+  height: 38px;
+  width: 100%;
+  border-radius: 20px;
+  border: solid 2px transparent;
+  color: transparent;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  background:url("../../planning/img/icon-send-black.png") no-repeat;
+  background-size: 25%;
+  background-position: center;
+}
+
+.container #texte-contact {
+  text-align: center;
+  margin-top: 30%;
+  font-size: 20px; 
+}
+
+
+@media screen and (max-width: 700px) {
+  .container .heading {
+    background-color: #009688;
+  }
+  .container .heading-compose i {
+    color: #fff;
+  }
+  .container .heading-name-meta {
+    color: #fff;
+  }
+  .container .sideBar-body {
+    height: 72px;
+  }
+  .container .sideBar-main {
+    padding: 0;
+  }
+  .container .sideBar-notif {
+    padding-top: 15px;
+  }
+  .container .sideBar-name {
+    padding: 15px 5px;
+  }
+  .container .name-meta {
+    font-size: 18px;
+  }
+  .container .reply-main {
+    padding: 5px;
+  }
+  .container .reply-main textarea {
+    padding: 8px;
+    font-size: 18px;
+  }
+  .container .reply-send {
+    padding: 5px 0;
+  }
+  .container .bouton-envoyer {
+    height: 45px;
+    width: 80%;
+    font-size: 10px;
+  }
+}       
