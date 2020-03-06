@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.forms import ModelForm
 from django.conf import settings
 from django.contrib.auth.models import User
+import datetime
 
 
 
@@ -57,19 +58,22 @@ class Bdd_formateurs(models.Model):
 	def __str__(self):
 		return self.nom
 
+
+
 class Bdd_missions(models.Model):
 
 	id = models.AutoField(primary_key = True)
 	nom = models.CharField(default=' ',max_length=400)
-	description = models.CharField(default=' ',max_length=400)
+	description = models.TextField()
 	formateur = models.CharField(default=' ',max_length=400)
-	date = models.DateField(default=' ',max_length=400)
-	
+	date = models.CharField(default=' ',max_length=400)
+         
 	
 	class Meta:
 		verbose_name = "Mission"
-		ordering = ['id']
+		ordering = ['date','formateur']
 	
 	def __str__(self):
-		return self.nom
+		return self.date
+
 

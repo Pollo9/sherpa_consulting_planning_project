@@ -1,3 +1,14 @@
+
+
+
+.add_form{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+
+
 .really_all_planning{
 	display: flex;
 	flex-direction: column;
@@ -163,7 +174,7 @@
 }
 
 .mois{
-	height: 45px;
+	height: 36px;
 	cursor: pointer;
 	float: right;
 	color: #222;
@@ -189,6 +200,8 @@
     text-align: center;
     border: none;
     border-radius: 8px;
+    width: 100%;
+    margin-bottom: 1px;
 }
 
 .no_line{
@@ -199,4 +212,8 @@
 
 .today{
 	background-color: red;
+}
+
+.two_mission{
+	height: 56px!important;
 }

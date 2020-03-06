@@ -3,9 +3,6 @@
 
 {% block link %}
 <link href="{% static 'planning/css/planning.css' %}" rel="stylesheet">
-<link href="{% static 'planning/css/core/main.css' %}" rel="stylesheet" />
-<link href="{% static 'planning/css/daygrid/main.css' %}" rel="stylesheet" />
-<link href="{% static 'planning/css/timegrid/main.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
@@ -47,11 +44,11 @@
 					</a>
 				</li>
 				<li class="titre_buttons">
-					<a href="#" data-toggle="modal" data-target="#terms-txt" style="cursor: pointer;float: right;color: #222;padding: 5px 12px 5px 12px;border-radius: 100%;"><em style="color: black;font-size: 37px;" class="icon-cloud-upload"></em>
+					<a href="#" data-toggle="modal" data-target="#terms-txt2" style="cursor: pointer;float: right;color: #222;padding: 5px 12px 5px 12px;border-radius: 100%;"><em style="color: black;font-size: 37px;" class="icon-cloud-upload"></em>
 					</a>
 				</li>
 				<li class="titre_buttons">
-					<a href="#" data-toggle="modal" data-target="#terms-txt" style="cursor: pointer;float: right;color: #222;padding: 5px 12px 5px 12px;border-radius: 100%;"><em style="color: black;font-size: 37px;" class="icon-plus"></em>
+					<a href="#" data-toggle="modal" data-target="#add_mission" style="cursor: pointer;float: right;color: #222;padding: 5px 12px 5px 12px;border-radius: 100%;"><em style="color: black;font-size: 37px;" class="icon-plus"></em>
 					</a>
 				</li>
 			</span>
@@ -146,33 +143,54 @@
 </section>
 
 <!-- forme d'une mission dans le planning -->
-<!-- <button id="1-17/2" class="missions" data-toggle="modal" data-target="#terms-txt"> Lorem Ipsum </button> -->
+<!-- <button class="missions" data-toggle="modal" data-target="#terms-txt"> Lorem Ipsum </button> -->
 
 
 <!-- Template de la pop-up -->
 <i class="icone-plus"></i>
-<div class="modal fade" id="terms-txt" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
+<div class="modal fade" id="add_mission" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="termsLabel">Les détails de la simulation</h4>
+				<h4 class="modal-title" id="termsLabel">Ajouter une mission</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>Prix du/des produit(s) TTC: <b style="float: right;">{{prix_total_projet_sans_aide}}€</b></p>
-				{% if prime_cdp != 0 %}
-				<p>Déduction de l'aides CoupDepouce: <b style="float: right;color: #155724">- {{prime_cdp}}€</b></p>
-				<p style="font-size: 10px;margin-top: -25px;"><b>*Directement déduite du devis.</b></p>
-				{% endif %}
-				<hr>
-				<p>Total TTC sur le bon de commande: <b style="float: right;">{{prix_avec_aide_et_suplement}}€</b></p>
-				{% if prime_mpr != 0 %}
-				<hr>
-				<p>Éligible à l'aide MaPrimeRénov : <b style="float: right;color: #155724">- {{prime_mpr}}€</b></p>
-				<p style="font-size: 10px;margin-top: -25px;">Site : <a href="https://www.maprimerenov.gouv.fr/">www.maprimerenov.gouv.fr</a></p>
-				{% endif %}
-				<hr>
-				<p>Total TTC après déduction des aides: <b style="float: right;">{{prix_total}}€</b></p>
+				<!-- <form class="add_form" method="post" action="{% url 'planning' %}"> {% csrf_token %}
+					<label>Titre</label>
+					<input type="text" name="titre" id="titre_mission">
+
+					<label>Consultant</label>
+					<input type="consultant" name="consultant" id="consultant_mission">
+
+					<label>Date</label>
+					<input type="date" name="date" id="date_mission" value="{% now 'Y-m-d' %}">
+					<input type="submit" name="ajouter_mission" value="Ajouter">
+				</form> -->
+				<!-- <form action="{% url 'planning' %}" method="post" enctype="multipart/form-data">
+				    {% csrf_token %}
+				    {{ form.as_p }}
+				    <input type="submit" name="ajouter_mission" value="Submit">
+				</form> -->
+				<form action="{% url 'planning' %}" method="post" enctype="multipart/form-data">
+				    {% csrf_token %}
+				    <p>
+				    	<label for="id_nom">Nom&nbsp;:</label> 
+				    	<input type="text" name="nom" value=" " maxlength="400" required="" id="id_nom">
+				    </p>
+					<p>
+						<label for="id_description">Description&nbsp;:</label> <textarea name="description" required="" rows="10" id="id_description" cols="40" style="margin-top: 2px; margin-bottom: 2px; height: 137px;"></textarea></p>
+					<p>
+						<label for="id_formateur">Formateur&nbsp;:</label>
+						<input type="text" name="formateur" value=" " maxlength="400" required="" id="id_formateur">
+					</p>
+					<p>
+						<label for="id_date">Date d'envoi&nbsp;:</label>
+						<input type="datetime-local" name="date" required="" id="id_date">
+					</p>
+
+					<input type="submit" name="ajouter_mission" value="Submit">
+				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn_1" data-dismiss="modal">Fermer</button>
@@ -181,6 +199,7 @@
 
 	</div>
 </div>
+
 
 {% endblock %}
 
@@ -196,7 +215,7 @@
 
 	// permet le fonctionnement de la fonction "on arrive sur ojd quand on charge la page"
 	let jours_lettres_ojd = moment().format("ddd");
-	var today = -2;
+	var today = -1;
 
 	if(jours_lettres_ojd[0] == 's') // si on est samedi on avance de 2 jours pour afficher lundi qui arrive
 		today -= 1;
@@ -223,7 +242,7 @@
 	function loadTab(nombre_jours_affiches_passe, nombre_jours_affiches_futur){
 		for (let i = nombre_jours_affiches_passe ; i < nombre_jours_affiches_futur; i++) { // nombre de jours chargés
 
-			// incrémentation d'une ligne (de cases)
+			// PARENTS D'UNE LIGNE -> ON Y FOUT LES CASES APRES
 			var parent_line_grid = [`<div class="line_grids" id="line_grids` + i + `"></div>`];
 			parent_line_grid.push();
 			document.getElementById("grids").insertAdjacentHTML('beforeend', parent_line_grid);
@@ -231,32 +250,97 @@
 			// variables pour les dates
 		  	let jours_lettres = moment().add(i,'days').format("ddd"); // ex : lun.
 		  	let jours_chiffres = moment().add(i,'days').format("DD"); // 01,02,...,31
-		  	let mois = moment().add(i,'days').format("M"); // 1,2,...,12
-		  	let annee = moment().add(i,'days').format("YYYY"); // 1,2,...,12
+		  	let mois = moment().add(i,'days').format("MM"); // 01,02,...,12
+		  	let mois_one_num = moment().add(i,'days').format("M"); // 1,2,...,12
+		  	let annee = moment().add(i,'days').format("YYYY"); // 98,99,00,...,19,20
 
-		  	// incrémentation des cases dans une ligne
+		  	var nbr_missions = 0;
+		  	var nbr_mission_oneDay = 0;
+		  	var nbr_mission_oneDay_max = 0;
+		  	var date_mission_case = annee.toString() + '-'+  mois.toString() + '-' + jours_chiffres.toString();
+
+		  	var formateur_mission_bdd = "";
+		  	// on cherche a savoir le nbr de missions maximale contenu dans une journée pour adapter la taille des cases
 		  	{% for formateur in formateurs %}
-		  		var grid = [`<div class="grid" id="` + "{{ formateur.nom }}" + `-` + jours_lettres.toString() + `-` + jours_chiffres.toString() + `"><label style="opacity:0;">Invisible</label></div>`];
-				grid.push();
-				document.getElementById("line_grids" + i ).insertAdjacentHTML('beforeend', grid);							
+		  		var formateur_mission_bdd = '';
+		  		{% for mission in missions %}		  			
+		  			var date_heure_mission_bdd = "{{ mission.date }}"; // DATE + HEURE DE LA MISSION DANS LA BASE DE DONNEE (2020-02-26 17:30:00)
+		  			var date_mission_bdd = date_heure_mission_bdd.substring(0,10); //ON RECUPERE QUE LA DATE (2020-02-26)
+		  			var formateur_mission_case = "{{ formateur.nom }}";
+		  			
+		  			if (date_mission_case == date_mission_bdd && ("{{ mission.formateur }}" == formateur_mission_bdd && formateur_mission_case == "{{ mission.formateur }}" || nbr_mission_oneDay == 0 && formateur_mission_case == "{{ mission.formateur }}")) {
+						nbr_mission_oneDay += 1;					
+					}
+					formateur_mission_bdd = "{{ mission.formateur }}";
+				{% endfor %}
+				nbr_mission_oneDay_max = Math.max(nbr_mission_oneDay, nbr_mission_oneDay_max);
+				nbr_mission_oneDay = 0;
+
 			{% endfor %}
 
+			
+			var height_ligne = nbr_mission_oneDay_max * 28 + nbr_mission_oneDay_max;
+			if(nbr_mission_oneDay_max == 0 || nbr_mission_oneDay_max == 1)
+				height_ligne = 28 + nbr_mission_oneDay_max ;
 
+			
+		  	// CASES DANS UNE LIGNE
+		  	{% for formateur in formateurs %}
+		  		var present = false;
+		  		var one_mission_grid = [];
+		  		{% for mission in missions %}
+
+		  			nbr_missions += 1; //fonction modifs mission
+		  			var date_mission_case = annee.toString() + '-'+  mois.toString() + '-' + jours_chiffres.toString(); // DATE DE LA LIGNE DU PLANING OU ON SE SITUE
+		  			var date_heure_mission_bdd = "{{ mission.date }}"; // DATE + HEURE DE LA MISSION DANS LA BASE DE DONNEE (2020-02-26 17:30:00)
+		  			var date_mission_bdd = date_heure_mission_bdd.substring(0,10); //ON RECUPERE QUE LA DATE (2020-02-26)
+
+		  			var formateur_mission_case = "{{ formateur.nom }}";
+		  			var formateur_mission_bdd = "{{ mission.formateur }}";
+		  			if (date_mission_case == date_mission_bdd && formateur_mission_case == formateur_mission_bdd) {
+						var present = true;
+						var nom_mission = "{{ mission.nom }}"; //PERMET D'AFFICHER LE NOM DE LA MISSION SUR LE PLANNING
+						var id_mission = "{{ mission.id }}"; //MODIFIER UNE MISSION
+						one_mission_grid.push([`<button draggable="true" id="mission_` + id_mission + `" class="missions" data-toggle="modal" data-target="#add_mission"> ` + nom_mission + ` </button>`]);
+					}
+
+				{% endfor %}
+				if (present) {
+					var id_grid = "{{ formateur.nom }}" + '/' + jours_chiffres.toString() + '/' + mois.toString()  + '/' + annee.toString();
+					var grid = [`<div class="grid" style="height:` + height_ligne + `px;" id="` + id_grid + `"></div>`];
+
+					grid.push();
+					document.getElementById("line_grids" + i ).insertAdjacentHTML('beforeend', grid);
+
+					for (let m = 0 ; m < one_mission_grid.length ; m++) {
+ 						document.getElementById(id_grid).insertAdjacentHTML('beforeend', one_mission_grid[m]);
+					}
+				}
+				else{
+					var grid = [`<div class="grid" style="height:` + height_ligne + `px;" id="` + "{{ formateur.nom }}" + `/` + jours_chiffres.toString() + `/` + mois.toString()  + `/` + annee.toString() + `"></div>`];
+					grid.push();
+					document.getElementById("line_grids" + i ).insertAdjacentHTML('beforeend', grid);
+				}
+											
+			{% endfor %}
+			
+
+			// CASES DATES GUAUCHES
 		  	month_j_moins1 = moment().add(i-1,'days').format("M"); // on recupère le mois du jour d'avant
 		  	month_j_moins3 = moment().add(i-3,'days').format("M"); // cas du lundi
-		  	if(month_j_moins1 != mois || jours_lettres[0] == 'l' && month_j_moins3 != mois){ // si le mois du jours d'avant est différent du jour même dans la var "mois" ou on est lundi est le vendredi avant le lundi est un mois différent	  		
-				var new_code = [`<div id="mois_` + mois +  `" class="jours"><span class="texte_jours">` + jours_lettres.toString() +`   `  + jours_chiffres.toString() + "/"  + mois.toString() + `</span></div>`]; // on ajoute un id pour le fonctionnement du chgmt de mois lors du scroll			 
+		  	if(month_j_moins1 != mois_one_num || jours_lettres[0] == 'l' && month_j_moins3 != mois_one_num){ // si le mois du jours d'avant est différent du jour même dans la var "mois" ou on est lundi est le vendredi avant le lundi est un mois différent	  		
+				var new_code = [`<div id="mois_` + mois_one_num +  `" class="jours" style="height:` + height_ligne + `px;"><span class="texte_jours">` + jours_lettres.toString() +`   `  + jours_chiffres.toString() + "/"  + mois_one_num.toString() + `</span></div>`]; // on ajoute un id pour le fonctionnement du chgmt de mois lors du scroll			 
 		  	}
 		  	else{
 		  		if(i == today){ // si on est au jour d'ojd, on le caractérise dans l'id (permet le fonctionnement de l'option "j'arrive sur ojd quand je charge la page")
-					var new_code = [`<div id="today" class="jours"><span class="texte_jours">` + jours_lettres.toString() +`   `  + jours_chiffres.toString() + "/"  + mois.toString() + `</span></div>`];
+					var new_code = [`<div id="today" class="jours" style="height:` + height_ligne + `px;"><span class="texte_jours">` + jours_lettres.toString() +`   `  + jours_chiffres.toString() + "/"  + mois.toString() + `</span></div>`];
 				}
 				else{
 				// Création et implémentation de la date (bord guauche du planning)
-		  		var new_code = [`<div class="jours"><span class="texte_jours">` + jours_lettres.toString() +`   `  + jours_chiffres.toString() + "/"  + mois.toString() + `</span></div>`];
+		  		var new_code = [`<div class="jours" style="height:` + height_ligne + `px;"><span class="texte_jours">` + jours_lettres.toString() +`   `  + jours_chiffres.toString() + "/"  + mois.toString() + `</span></div>`];
 				}  				
 		  	}
-			
+		
 			new_code.push();
 			document.getElementById("first_table").insertAdjacentHTML('beforeend',new_code);
 
@@ -278,16 +362,15 @@
 		  		var space_line = [`<div id="space` + nbre_weekend + `" class="jours"><span style="text-align:center;" class="texte_jours"> --- </span></div>`];
 				space_line.push();
 				document.getElementById("first_table").insertAdjacentHTML('beforeend',space_line);
-				i+=2; // pas de weekend donc on passe directement au lundi
-				
-		  	}			
+				i+=2; // pas de weekend donc on passe directement au lundi			
+		  	}	
 		}
 	}
 
 	var nombre_lignes_total = (-nombre_jours_affiches_passe) + nombre_jours_affiches_futur - nbre_weekend; // permet de calculer le nombre de lignes exact (en enlevant une ligne à chaque weekend, une ligne car on implémente une ligne vide)
-
 	loadTab(nombre_jours_affiches_passe, nombre_jours_affiches_futur); //on implemente le premier chargement du planning
 	
+
 	function deleteFirstElements(){	// SUPPRESSION DE LA MOITIE DES PREMIERESCASES	
 
 	   	for(let i = 1; i <= nombre_lignes_total / 2 ; i++){
@@ -299,26 +382,39 @@
 
 	}
 
-	//quand on atteint le bottom du scroll on charge les nouvelles données
+	//quand on atteint le bottom du scroll on charge les nouvelles données (suppression + ajout de lignes)
 	jQuery(function($) {
 		$('#table').on('scroll', function() {
 			if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
 				deleteFirstElements();
 				var nbr = nombre_jours_affiches_futur + nombre_lignes_total / 2 + nbre_weekend;
 			    loadTab(nombre_jours_affiches_futur, nbr);
+			    nombre_jours_affiches_passe = nombre_jours_affiches_futur;
+			    nombre_jours_affiches_futur = nbr;
+			    nbre_weekend = 0;
 			}
 		})
-	});		
+	});	
 
 	// fonctionnement du chgmt de mois lors du scroll
 	$(window).bind('mousewheel', function(event) {
 		if (event.originalEvent.wheelDelta >= 0) { // scroll vers le haut (donc les dates descendent)
 
-		    console.log('Scroll up');		    
+		    // console.log('Scroll up');		    
 		    for (var i = 1; i <= 12 ; i++) {
+
 		    	var mois = document.getElementById("mois_" + i); 
-		    	var div_top = document.getElementById("case_jours");
-		    	var offsetTop_mois = mois.offsetTop; // calcul la distance entre les haut du tableau et la mois visé
+		    	try {
+		    		var div_top = document.getElementById("case_jours");
+				  	var offsetTop_mois = mois.offsetTop; // calcul la distance entre les haut du tableau et la mois visé
+				}
+				catch(error) {
+				  	console.log("Ok");
+
+				  // expected output: ReferenceError: nonExistentFunction is not defined
+				  // Note - error messages will vary depending on browser
+				}
+		    			    	
 		    	var offsetTop_top = div_top.offsetTop; // calcul la distance entre les haut du tableau et la case jours
 		    	var diff_bottom_top = offsetTop_mois - offsetTop_top;  // calcul de la distance entre la div visée et la case "Jours" (parait inutilie mais fait fonctionner le bail)
 				if (document.getElementById(i).className == "mois this_month" && diff_bottom_top > 300) {
@@ -334,11 +430,19 @@
 		}
 		else {	 // scroll vers le bas (donc les dates montent)
 											  
-		    console.log('Scroll down');
-		    for (var i = 1; i <= 12 ; i++) {
+		    // console.log('Scroll down');
+		    for (var i = 1 ; i <= 12 ; i++) {
 		    	var mois = document.getElementById("mois_" + i);
-		    	var div_top = document.getElementById("case_jours");
-		    	var offsetTop_mois = mois.offsetTop;
+		    	try {
+		    		var div_top = document.getElementById("case_jours");
+				  	var offsetTop_mois = mois.offsetTop; // calcul la distance entre les haut du tableau et la mois visé
+				}
+				catch(error) {
+					console.log("Ok");
+
+				  // expected output: ReferenceError: nonExistentFunction is not defined
+				  // Note - error messages will vary depending on browser
+				}
 		    	var offsetTop_top = div_top.offsetTop;
 		    	var diff_bottom_top = offsetTop_mois - offsetTop_top;  // calcul de la distance entre la div visée et la case "Jours"
 		    	if (diff_bottom_top  <= 300 && diff_bottom_top  > 0 && document.getElementById(i).className != "mois this_month") {
@@ -350,6 +454,8 @@
 		    }	    
 		}
 	});
+
+	
 
 	    
 	// lors du chargement de la page, on arrive directement sur le jour d'ojd

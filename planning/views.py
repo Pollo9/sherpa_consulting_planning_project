@@ -6,6 +6,31 @@ from twilio.rest import Client
 from django_twilio.decorators import twilio_view
 from .models import *
 from planning.models import Bdd_consultants, Bdd_messages
+from .forms import *
+
+
+
+def planning(request):
+	formateurs = Bdd_formateurs.objects.all()
+	missions = Bdd_missions.objects.all()
+	if(request.method == 'POST' and 'ajouter_mission' in request.POST):
+
+		form = ajouter_missionForm(request.POST)
+		description = request.POST.get('description', '')
+		nom = request.POST.get('nom', '')
+		formateur = request.POST.get('formateur','')
+		date = request.POST.get('date','')
+		ajouter_obj = Bdd_missions(nom = nom, description = description, formateur = formateur, date = date)
+		ajouter_obj.save()
+		return HttpResponseRedirect('planning')
+			
+	else:
+		form = ajouter_missionForm()
+	context = locals()
+	template = "planning.html"
+	return render(request, template, context)
+
+
 
 def index(request):
 	context = locals()
@@ -103,13 +128,7 @@ def sms(request):
 
 
 
-def planning(request):
-	formateurs = Bdd_formateurs.objects.all()
-	missions = Bdd_missions.objects.all()
 
-	context = locals()
-	template = "planning.html"
-	return render(request,template,context)
 
 
 
