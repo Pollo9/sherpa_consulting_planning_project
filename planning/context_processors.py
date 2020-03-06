@@ -1,4 +1,4 @@
-from planning.models import Bdd_consultants, Bdd_messages
+from planning.models import Bdd_messages
 
 def notif_total(request):
 	msg = Bdd_messages.objects.all()

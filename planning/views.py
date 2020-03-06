@@ -5,43 +5,20 @@ from django.db.models import Q
 from twilio.rest import Client
 from django_twilio.decorators import twilio_view
 from .models import *
-from planning.models import Bdd_consultants, Bdd_messages
-from .forms import *
-
-
-
-def planning(request):
-	formateurs = Bdd_formateurs.objects.all()
-	missions = Bdd_missions.objects.all()
-	if(request.method == 'POST' and 'ajouter_mission' in request.POST):
-
-		form = ajouter_missionForm(request.POST)
-		description = request.POST.get('description', '')
-		nom = request.POST.get('nom', '')
-		formateur = request.POST.get('formateur','')
-		date = request.POST.get('date','')
-		ajouter_obj = Bdd_missions(nom = nom, description = description, formateur = formateur, date = date)
-		ajouter_obj.save()
-		return HttpResponseRedirect('planning')
-			
-	else:
-		form = ajouter_missionForm()
-	context = locals()
-	template = "planning.html"
-	return render(request, template, context)
-
-
+from planning.models import Bdd_messages, Bdd_user_django
 
 def index(request):
 	context = locals()
 	template = "index.html"
 	return render(request,template,context)
 
+
 def messagerie(request):
-	consultants = Bdd_consultants.objects.all()
+	consultants = Bdd_user_django.objects.filter(user_django__id__isnull=False)
 
 	notif = {}
 	for c in consultants:
+		print(c.id)
 		msg = Bdd_messages.objects.filter(envoyeur__id = c.id).order_by('-date')[:10][::-1]
 		compteur = 0
 		for m in msg:
@@ -59,10 +36,10 @@ def messagerie(request):
 
 def messages(request, id, nom, all):
 	see_all = int(all)
-	consultants = Bdd_consultants.objects.all()
+	consultants = Bdd_user_django.objects.filter(user_django__id__isnull=False)
 
 	try:
-	    consultant_selectionne = Bdd_consultants.objects.get(id = id, nom = nom)
+	    consultant_selectionne = Bdd_user_django.objects.get(id = id, nom = nom)
 	except SomeModel.DoesNotExist:
 	    consultant_selectionne = None
 
@@ -76,11 +53,11 @@ def messages(request, id, nom, all):
 			                .create(
 			                     body = request.POST.get('message-texte'),
 			                     from_ = settings.TWILIO_NUMBER,
-			                     to = consultant_selectionne.telephone
+			                     to = consultant_selectionne.user_django.telephone
 			                 )
 
 			m = Bdd_messages()
-			e = Bdd_consultants.objects.get(nom = 'Consulting', prenom = 'Sherpa')
+			e = Bdd_user_django.objects.get(nom = 'Consulting', prenom = 'Sherpa')
 			r = consultant_selectionne
 
 			m.message = request.POST.get('message-texte')
@@ -118,8 +95,8 @@ def messages(request, id, nom, all):
 @twilio_view
 def sms(request):
 	m = Bdd_messages()
-	r = Bdd_consultants.objects.get(telephone = request.POST.get('To'))
-	e = Bdd_consultants.objects.get(telephone = request.POST.get('From'))
+	r = Bdd_user_django.objects.get(user_django__telephone = request.POST.get('To'))
+	e = Bdd_user_django.objects.get(user_django__telephone = request.POST.get('From'))
 	
 	m.message = request.POST.get('Body')
 	m.envoyeur = e
@@ -128,11 +105,11 @@ def sms(request):
 
 
 
+def planning(request):
+	consultants = Bdd_consultants.objects.all()
+	missions = Bdd_missions.objects.all()
+	formateurs = Bdd_formateurs.objects.all()
 
-
-
-
-
-
-
-
+	context = locals()
+	template = "planning.html"
+	return render(request,template,context)

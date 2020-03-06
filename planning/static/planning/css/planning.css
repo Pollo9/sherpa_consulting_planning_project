@@ -94,7 +94,7 @@
 }
 
 
-.formateurs{
+.consultants{
 	text-align: center;
 	width: 128px;
 	min-width: 128px;
@@ -134,7 +134,7 @@
   	height: max-content;
 }
 
-.formateurs_grids{
+.consultants_grids{
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;

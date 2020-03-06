@@ -129,10 +129,10 @@
 
 		</div>
 
-		<div class="formateurs_grids" id="grids">
+		<div class="consultants_grids" id="grids">
 
-			<!-- Les formateurs -->
-			<span class="second_table" id="table_formateurs">				
+			<!-- Les consultants -->
+			<span class="second_table" id="table_consultants">				
 			</span>
 
 			<!-- Toutes les cases  -->
@@ -181,8 +181,8 @@
 					<p>
 						<label for="id_description">Description&nbsp;:</label> <textarea name="description" required="" rows="10" id="id_description" cols="40" style="margin-top: 2px; margin-bottom: 2px; height: 137px;"></textarea></p>
 					<p>
-						<label for="id_formateur">Formateur&nbsp;:</label>
-						<input type="text" name="formateur" value=" " maxlength="400" required="" id="id_formateur">
+						<label for="id_consultant">consultant&nbsp;:</label>
+						<input type="text" name="consultant" value=" " maxlength="400" required="" id="id_consultant">
 					</p>
 					<p>
 						<label for="id_date">Date d'envoi&nbsp;:</label>
@@ -224,11 +224,11 @@
 	
 
 
-	// Affichage des formateurs dans la barre du dessus
-	{% for formateur in formateurs %}
-			var new_code_formateurs = [`<div class="formateurs">` + "{{ formateur.nom }}" + `</div>`];
-			new_code_formateurs.push();
-			document.getElementById("table_formateurs").insertAdjacentHTML('beforeend',new_code_formateurs);
+	// Affichage des consultants dans la barre du dessus
+	{% for consultant in consultants %}
+			var new_code_consultants = [`<div class="consultants">` + "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}"+ `</div>`];
+			new_code_consultants.push();
+			document.getElementById("table_consultants").insertAdjacentHTML('beforeend',new_code_consultants);
 	{% endfor %}
 
 	moment.locale('fr'); // definition de l'heure française
@@ -259,19 +259,19 @@
 		  	var nbr_mission_oneDay_max = 0;
 		  	var date_mission_case = annee.toString() + '-'+  mois.toString() + '-' + jours_chiffres.toString();
 
-		  	var formateur_mission_bdd = "";
+		  	var consultant_mission_bdd = "";
 		  	// on cherche a savoir le nbr de missions maximale contenu dans une journée pour adapter la taille des cases
-		  	{% for formateur in formateurs %}
-		  		var formateur_mission_bdd = '';
+		  	{% for consultant in consultants %}
+		  		var consultant_mission_bdd = '';
 		  		{% for mission in missions %}		  			
-		  			var date_heure_mission_bdd = "{{ mission.date }}"; // DATE + HEURE DE LA MISSION DANS LA BASE DE DONNEE (2020-02-26 17:30:00)
+		  			var date_heure_mission_bdd = "{{ mission.date_debut }}"; // DATE + HEURE DE LA MISSION DANS LA BASE DE DONNEE (2020-02-26 17:30:00)
 		  			var date_mission_bdd = date_heure_mission_bdd.substring(0,10); //ON RECUPERE QUE LA DATE (2020-02-26)
-		  			var formateur_mission_case = "{{ formateur.nom }}";
+		  			var consultant_mission_case = "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}";
 		  			
-		  			if (date_mission_case == date_mission_bdd && ("{{ mission.formateur }}" == formateur_mission_bdd && formateur_mission_case == "{{ mission.formateur }}" || nbr_mission_oneDay == 0 && formateur_mission_case == "{{ mission.formateur }}")) {
+		  			if (date_mission_case == date_mission_bdd && ("{{ mission.consultant }}" == consultant_mission_bdd && consultant_mission_case == "{{ mission.consultant }}" || nbr_mission_oneDay == 0 && consultant_mission_case == "{{ mission.consultant }}")) {
 						nbr_mission_oneDay += 1;					
 					}
-					formateur_mission_bdd = "{{ mission.formateur }}";
+					consultant_mission_bdd = "{{ mission.consultant }}";
 				{% endfor %}
 				nbr_mission_oneDay_max = Math.max(nbr_mission_oneDay, nbr_mission_oneDay_max);
 				nbr_mission_oneDay = 0;
@@ -285,28 +285,28 @@
 
 			
 		  	// CASES DANS UNE LIGNE
-		  	{% for formateur in formateurs %}
+		  	{% for consultant in consultants %}
 		  		var present = false;
 		  		var one_mission_grid = [];
 		  		{% for mission in missions %}
 
 		  			nbr_missions += 1; //fonction modifs mission
 		  			var date_mission_case = annee.toString() + '-'+  mois.toString() + '-' + jours_chiffres.toString(); // DATE DE LA LIGNE DU PLANING OU ON SE SITUE
-		  			var date_heure_mission_bdd = "{{ mission.date }}"; // DATE + HEURE DE LA MISSION DANS LA BASE DE DONNEE (2020-02-26 17:30:00)
+		  			var date_heure_mission_bdd = "{{ mission.date_debut }}"; // DATE + HEURE DE LA MISSION DANS LA BASE DE DONNEE (2020-02-26 17:30:00)
 		  			var date_mission_bdd = date_heure_mission_bdd.substring(0,10); //ON RECUPERE QUE LA DATE (2020-02-26)
 
-		  			var formateur_mission_case = "{{ formateur.nom }}";
-		  			var formateur_mission_bdd = "{{ mission.formateur }}";
-		  			if (date_mission_case == date_mission_bdd && formateur_mission_case == formateur_mission_bdd) {
+		  			var consultant_mission_case = "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}";
+		  			var consultant_mission_bdd = "{{ mission.consultant }}";
+		  			if (date_mission_case == date_mission_bdd && consultant_mission_case == consultant_mission_bdd) {
 						var present = true;
-						var nom_mission = "{{ mission.nom }}"; //PERMET D'AFFICHER LE NOM DE LA MISSION SUR LE PLANNING
+						var nom_mission = "{{ mission.adresse }}"; //PERMET D'AFFICHER LE NOM DE LA MISSION SUR LE PLANNING
 						var id_mission = "{{ mission.id }}"; //MODIFIER UNE MISSION
 						one_mission_grid.push([`<button draggable="true" id="mission_` + id_mission + `" class="missions" data-toggle="modal" data-target="#add_mission"> ` + nom_mission + ` </button>`]);
 					}
 
 				{% endfor %}
 				if (present) {
-					var id_grid = "{{ formateur.nom }}" + '/' + jours_chiffres.toString() + '/' + mois.toString()  + '/' + annee.toString();
+					var id_grid = "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}" + '/' + jours_chiffres.toString() + '/' + mois.toString()  + '/' + annee.toString();
 					var grid = [`<div class="grid" style="height:` + height_ligne + `px;" id="` + id_grid + `"></div>`];
 
 					grid.push();
@@ -317,7 +317,7 @@
 					}
 				}
 				else{
-					var grid = [`<div class="grid" style="height:` + height_ligne + `px;" id="` + "{{ formateur.nom }}" + `/` + jours_chiffres.toString() + `/` + mois.toString()  + `/` + annee.toString() + `"></div>`];
+					var grid = [`<div class="grid" style="height:` + height_ligne + `px;" id="` + "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}" + `/` + jours_chiffres.toString() + `/` + mois.toString()  + `/` + annee.toString() + `"></div>`];
 					grid.push();
 					document.getElementById("line_grids" + i ).insertAdjacentHTML('beforeend', grid);
 				}
@@ -353,7 +353,7 @@
 				document.getElementById("grids").insertAdjacentHTML('beforeend', parent_line_grid_empty); //on incrémente la ligne vide
 
 				// on implémente les cases de la lignes vides avec juste un border bottom
-				{% for formateur in formateurs %}			
+				{% for consultant in consultants %}			
 					no_line.push()
 					document.getElementById("no_line" + i).insertAdjacentHTML('beforeend', no_line);
 				{% endfor %}
