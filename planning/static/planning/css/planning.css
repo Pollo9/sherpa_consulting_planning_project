@@ -1,4 +1,88 @@
+.bouton_filtrer{
+	color: #fff;
+    background-color: #2f353a;
+    border-color: #2f353a;
+    box-shadow: 0 0.125rem 0.625rem #2f353a, 0 0.0625rem 0.125rem rgba(58, 196, 125,0.5);
+    border-radius: 10%;
+    display: flex;
+}
 
+.bouton_ajouter{
+	color: #fff;
+    background-color: #3ac47d;
+    border-color: #3ac47d;
+    box-shadow: 0 0.125rem 0.625rem rgba(58, 196, 125, 0.4), 0 0.0625rem 0.125rem rgba(58, 196, 125,0.5);
+    border-radius: 10%;
+    display: flex;
+    cursor: pointer;
+}
+
+
+
+.bouton_upload{
+	color: #fff;
+    background-color: #2f353a;
+    border-color: #2f353a;
+    box-shadow: 0 0.125rem 0.625rem #2f353a, 0 0.0625rem 0.125rem rgba(58, 196, 125,0.5);
+    border-radius: 10%;
+    display: flex;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.icons_size{
+	font-size:28px;
+}
+
+.buttons_gestions_indiv{
+	cursor: pointer;
+	float: right;
+	color: white;
+	padding: 5px 12px 5px 12px;
+	border-radius: 100%;
+	margin: auto;
+}
+
+.indicateur_mois{
+	background-color: #2f353a;
+    position: absolute;
+    margin-top: 300px;
+    width: 6px;
+    height: 2px;
+    z-index: 5;
+}
+
+.buttons_gestion{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-top: 22px;
+	margin-bottom: 25px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #3ac47d;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #3ac47d80;
+}
 
 
 .add_form{
@@ -15,12 +99,17 @@
 	align-items: space-between;
 }
 
-.titre_buttons{
+.titre_buttons_mois{
 	float: left;
 }
 
+
+
 .buttons{
 	float: right;
+    display: flex;
+    flex-direction: row;
+    margin-right: 34px;
 }
 
 .all_first_line{
@@ -35,18 +124,19 @@
 	justify-content: center;
     width: 100%;
     height: auto;
+    margin-bottom:14px;
 }
 
 .titre{
 	font-size: 26px;
 	color: #2f353a;
+	margin-left: 28px;
 }
 
 .container_filter_button{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	margin-top: 5px;
 }
 
 .navbar_planning{
@@ -84,20 +174,23 @@
 	border-width: 1px;
 	border-top: none;
 	height: 28px;
-
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 
 
 .texte_jours{
-	margin-left: 8px;
+	margin-left: auto;
+    margin-right: auto;
 }
 
 
 .consultants{
 	text-align: center;
-	width: 128px;
-	min-width: 128px;
+	width: 160px;
+	min-width: 160px;
 	border-color: #ddd;
 	border-style: solid;
 	border-width: 1px;
@@ -151,7 +244,7 @@
 }
 
 .grid{
-	width: 128px;
+	width: 160px;
 	border-color: #ddd;
 	border-style: solid;
 	border-width: 1px;
@@ -163,7 +256,7 @@
 
 /*class des cases de la ligne de transition des semaines */
 .no_line{
-	width: 128px;
+	width: 160px;
 	border-color: #ddd;
 	border-style: solid;
 	border-width: 1px;
@@ -187,8 +280,22 @@
 	width: 100px;
 }
 
+.mois:hover{
+	background-color:#2f353ab0; 
+}
+
+.mois.this_month:hover{
+	background-color: #2f353a;
+	color: white;
+	border-color: #2f353a;
+    box-shadow: 0 0.125rem 0.625rem #2f353a, 0 0.0625rem 0.125rem rgba(58, 196, 125,0.5);
+}
+
 .this_month{
-	background-color: #ddd;
+	background-color: #2f353a;
+	color: white;
+	border-color: #2f353a;
+    box-shadow: 0 0.125rem 0.625rem #2f353a, 0 0.0625rem 0.125rem rgba(58, 196, 125,0.5);
 }
 
 
@@ -196,7 +303,8 @@
 	background-color: #6262ea;
     padding-left: 23px;
     padding-right: 23px;
-    padding-bottom: 6px;
+    padding-top: 17px;
+    padding-bottom: 17px;
     text-align: center;
     border: none;
     border-radius: 8px;

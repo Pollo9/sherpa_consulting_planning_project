@@ -38,9 +38,6 @@ class Bdd_messagesAdmin(admin.ModelAdmin):
 	search_fields = ['titre']
 	list_display = ('id','envoyeur','receveur','message','date','lu')
 
-class Bdd_formateursAdmin(admin.ModelAdmin):
-	search_fields = ['titre']
-	list_display = ('id','nom')
 
 
 admin.site.register(Bdd_user_django,Bdd_userDjangoAdmin)
@@ -52,4 +49,3 @@ admin.site.register(Bdd_client,Bdd_clientAdmin)
 admin.site.register(Bdd_adresse_client,Bdd_adresseClientAdmin)
 admin.site.register(Bdd_missions,Bdd_missionsAdmin)
 admin.site.register(Bdd_messages,Bdd_messagesAdmin)
-admin.site.register(Bdd_formateurs,Bdd_formateursAdmin)

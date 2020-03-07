@@ -27,179 +27,122 @@
 </style>
 
 
-<section class="really_all_planning">
-	<div class="navbar_planning">
 
-		<ul class="all_first_line">
-			<li class="titre_buttons">
-				<p class="titre">Planning 2020</p>
-			</li>
-			<span class="buttons">
-				<li class="titre_buttons">
-					<a href="#" data-toggle="modal" data-target="#terms-txt" style="height: 45px;cursor: pointer;float: right;color: #222;padding: 5px 12px 5px 12px; border-style: solid;">
-						<div class="container_filter_button">
-							<em style="color: black;font-size: 21px;margin-right: 4px;" class="icon-plus"></em>
-							<p>Filter</p>
-						</div>
-					</a>
-				</li>
-				<li class="titre_buttons">
-					<a href="#" data-toggle="modal" data-target="#terms-txt2" style="cursor: pointer;float: right;color: #222;padding: 5px 12px 5px 12px;border-radius: 100%;"><em style="color: black;font-size: 37px;" class="icon-cloud-upload"></em>
-					</a>
-				</li>
-				<li class="titre_buttons">
-					<a href="#" data-toggle="modal" data-target="#add_mission" style="cursor: pointer;float: right;color: #222;padding: 5px 12px 5px 12px;border-radius: 100%;"><em style="color: black;font-size: 37px;" class="icon-plus"></em>
-					</a>
-				</li>
-			</span>
-		</ul>
-
-
-		<div class="all_second_line">
-			<div class="titre_buttons">
-				<a class="mois" id="1" style="border-left: solid;border-left-width: 1px;border-left-color: #ddd;">			
-					<p>Janvier</p>
-				</a>
-			</div>
-			<div class="titre_buttons">
-				<a class="mois" id="2">			
-					<p>Février</p>
-				</a>
-			</div>
-			<div class="titre_buttons">
-				<a class="mois" id="3">			
-					<p>Mars</p>
-				</a>
-			</div>
-			<div class="titre_buttons">
-				<a class="mois" id="4">			
-					<p>Avril</p>
-				</a>
-			</div>
-			<div class="titre_buttons">
-				<a class="mois" id="5">			
-					<p>Mai</p>
-				</a>
-			</div>
-			<div class="titre_buttons">
-				<a class="mois" id="6">			
-					<p>Juin</p>
-				</a>
-			</div>
-			<div class="titre_buttons">
-				<a class="mois" id="7">			
-					<p>Juillet</p>
-				</a>
-			</div>
-			<div class="titre_buttons">
-				<a class="mois" id="8">			
-					<p>Août</p>
-				</a>
-			</div>
-			<div class="titre_buttons">
-				<a class="mois" id="9">			
-					<p>Septembre</p>
-				</a>
-			</div>
-			<div class="titre_buttons">
-				<a class="mois" id="10">			
-					<p>Octobre</p>
-				</a>
-			</div>
-			<div class="titre_buttons">
-				<a class="mois" id="11">			
-					<p>Novembre</p>
-				</a>
-			</div>
-			<div class="titre_buttons">
-				<a class="mois"  id="12">			
-					<p>Décembre</p>
-				</a>
-			</div>
-		</div>
+<div class="buttons_gestion">
+	<div class="titre_planning">
+		<p class="titre">
+			Planning 2020
+		</p>
 	</div>
-
-
-	<div class="table" id="table">
-
-		<div class="first_table" id="first_table">
-			<span class="case_jours" id="case_jours">Jours</span>
-
-			<!-- Les dates des jours -->
-
+	<span class="buttons">
+		<div class="bouton_filtrer">
+			<a class="buttons_gestions_indiv"  href="#" data-toggle="modal" data-target="#terms-txt">
+				<div class="container_filter_button">
+					<em style="" class="icon-plus icons_size"></em>
+					<p style="margin-left: 9px;margin-top: 3px;">
+						Filtrer
+					</p>
+				</div>
+			</a>
 		</div>
-
-		<div class="consultants_grids" id="grids">
-
-			<!-- Les consultants -->
-			<span class="second_table" id="table_consultants">				
-			</span>
-
-			<!-- Toutes les cases  -->
-
+		<div class="bouton_upload">
+			<a class="buttons_gestions_indiv" href="#" data-toggle="modal" data-target="#terms-txt2"><em class="icon-cloud-upload icons_size"></em></a>
 		</div>
-
+		<div class="bouton_ajouter">
+			<a class="buttons_gestions_indiv" href="#" data-toggle="modal" data-target="#add_mission"><em class="icon-plus icons_size"></em></a>
+		</div>
+	</span>
+</div>
+<div class="all_second_line">
+	<div class="titre_buttons_mois">
+		<a class="mois" id="1" href="{% url 'planning' %}#mois_1" onclick="clickOnMonth(1)" style="border-left: solid;border-left-width: 1px;border-left-color: #ddd;"><p>Janvier</p></a>
 	</div>
-</section>
+	<div class="titre_buttons_mois">
+		<a class="mois" id="2" href="{% url 'planning' %}#mois_2" onclick="clickOnMonth(2)"><p>Février</p></a>
+	</div>
+	<div class="titre_buttons_mois">
+		<a class="mois" id="3" href="{% url 'planning' %}#mois_3" onclick="clickOnMonth(3)"><p>Mars</p></a>
+	</div>
+	<div class="titre_buttons_mois">
+		<a class="mois" id="4" href="{% url 'planning' %}#mois_4" onclick="clickOnMonth(4)"><p>Avril</p></a>
+	</div>
+	<div class="titre_buttons_mois">
+		<a class="mois" id="5" href="{% url 'planning' %}#mois_5" onclick="clickOnMonth(5)"><p>Mai</p></a>
+	</div>
+	<div class="titre_buttons_mois">
+		<a class="mois" id="6" href="{% url 'planning' %}#mois_6" onclick="clickOnMonth(6)"><p>Juin</p></a>
+	</div>
+	<div class="titre_buttons_mois">
+		<a class="mois" id="7" href="{% url 'planning' %}#mois_7" onclick="clickOnMonth(7)"><p>Juillet</p></a>
+	</div>
+	<div class="titre_buttons_mois">
+		<a class="mois" id="8" href="{% url 'planning' %}#mois_8" onclick="clickOnMonth(8)"><p>Août</p></a>
+	</div>
+	<div class="titre_buttons_mois">
+		<a class="mois" id="9" href="{% url 'planning' %}#mois_9" onclick="clickOnMonth(9)"><p>Septembre</p></a>
+	</div>
+	<div class="titre_buttons_mois">
+		<a class="mois" id="10" href="{% url 'planning' %}#mois_10" onclick="clickOnMonth(10)"><p>Octobre</p></a>
+	</div>
+	<div class="titre_buttons_mois">
+		<a class="mois" id="11" href="{% url 'planning' %}#mois_11" onclick="clickOnMonth(11)"><p>Novembre</p></a>
+	</div>
+	<div class="titre_buttons_mois">
+		<a class="mois" id="12" href="{% url 'planning' %}#mois_12" onclick="clickOnMonth(12)"><p>Décembre</p></a>
+	</div>
+</div>
+<div class="table" id="table">
+	<div class="indicateur_mois"></div>
+	<div class="first_table" id="first_table">
+		<span class="case_jours" id="case_jours">Jours</span>
+		<!-- Les dates des jours -->
+	</div>
+	<div class="consultants_grids" id="grids">
+		<!-- Les consultants -->
+		<span class="second_table" id="table_consultants"></span>
+		<!-- Toutes les cases  -->
+	</div>
+</div>
 
-<!-- forme d'une mission dans le planning -->
-<!-- <button class="missions" data-toggle="modal" data-target="#terms-txt"> Lorem Ipsum </button> -->
-
-
-<!-- Template de la pop-up -->
-<i class="icone-plus"></i>
 <div class="modal fade" id="add_mission" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="termsLabel">Ajouter une mission</h4>
+				<h4 class="modal-title" id="termsLabel">Création de la mission </h4>
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<!-- <form class="add_form" method="post" action="{% url 'planning' %}"> {% csrf_token %}
-					<label>Titre</label>
-					<input type="text" name="titre" id="titre_mission">
-
-					<label>Consultant</label>
-					<input type="consultant" name="consultant" id="consultant_mission">
-
-					<label>Date</label>
-					<input type="date" name="date" id="date_mission" value="{% now 'Y-m-d' %}">
-					<input type="submit" name="ajouter_mission" value="Ajouter">
-				</form> -->
-				<!-- <form action="{% url 'planning' %}" method="post" enctype="multipart/form-data">
-				    {% csrf_token %}
-				    {{ form.as_p }}
-				    <input type="submit" name="ajouter_mission" value="Submit">
-				</form> -->
 				<form action="{% url 'planning' %}" method="post" enctype="multipart/form-data">
 				    {% csrf_token %}
 				    <p>
-				    	<label for="id_nom">Nom&nbsp;:</label> 
-				    	<input type="text" name="nom" value=" " maxlength="400" required="" id="id_nom">
+				    	<label for="id_date_debut">Date debut&nbsp;:</label> <input type="datetime-local" name="date_debut" id="id_date_debut" maxlength="400" required="">
 				    </p>
 					<p>
-						<label for="id_description">Description&nbsp;:</label> <textarea name="description" required="" rows="10" id="id_description" cols="40" style="margin-top: 2px; margin-bottom: 2px; height: 137px;"></textarea></p>
-					<p>
-						<label for="id_consultant">consultant&nbsp;:</label>
-						<input type="text" name="consultant" value=" " maxlength="400" required="" id="id_consultant">
+						<label for="id_date_fin">Date fin&nbsp;:</label> <input type="datetime-local" name="date_fin" id="id_date_fin" maxlength="400" required="">
 					</p>
 					<p>
-						<label for="id_date">Date d'envoi&nbsp;:</label>
-						<input type="datetime-local" name="date" required="" id="id_date">
+						<label for="id_status">Status&nbsp;:</label> <select name="status" id="id_status">
+						  <option value="A">En Attente</option>
+
+						  <option value="C">En Cours</option>
+
+						  <option value="T">Terminée</option>
+
+						</select>
 					</p>
 
-					<input type="submit" name="ajouter_mission" value="Submit">
+				    {{ form.as_p }}
+				    <input type="submit" name="ajouter_mission" value="Créer une misson">
 				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn_1" data-dismiss="modal">Fermer</button>
 			</div>
 		</div>
-
+		<!-- /.modal-content -->
 	</div>
+	<!-- /.modal-dialog -->
 </div>
-
 
 {% endblock %}
 
@@ -211,7 +154,7 @@
 	var nbre_weekend = 0;//permet le fonctionnement du chargement de données
 
 	var nombre_jours_affiches_futur = 200;
-	var nombre_jours_affiches_passe = -30;
+	var nombre_jours_affiches_passe = -200;
 
 	// permet le fonctionnement de la fonction "on arrive sur ojd quand on charge la page"
 	let jours_lettres_ojd = moment().format("ddd");
@@ -239,7 +182,7 @@
 
 	var no_line = [`<div class="no_line"><label style="opacity:0;">Invisible</label></div>`];
 	
-	function loadTab(nombre_jours_affiches_passe, nombre_jours_affiches_futur){
+	function loadTab(nombre_jours_affiches_passe, nombre_jours_affiches_futur, start_or_end){
 		for (let i = nombre_jours_affiches_passe ; i < nombre_jours_affiches_futur; i++) { // nombre de jours chargés
 
 			// PARENTS D'UNE LIGNE -> ON Y FOUT LES CASES APRES
@@ -248,7 +191,7 @@
 			document.getElementById("grids").insertAdjacentHTML('beforeend', parent_line_grid);
 		
 			// variables pour les dates
-		  	let jours_lettres = moment().add(i,'days').format("ddd"); // ex : lun.
+		  	let jours_lettres = moment().add(i,'days').format("dddd"); // ex : lun.
 		  	let jours_chiffres = moment().add(i,'days').format("DD"); // 01,02,...,31
 		  	let mois = moment().add(i,'days').format("MM"); // 01,02,...,12
 		  	let mois_one_num = moment().add(i,'days').format("M"); // 1,2,...,12
@@ -267,11 +210,11 @@
 		  			var date_heure_mission_bdd = "{{ mission.date_debut }}"; // DATE + HEURE DE LA MISSION DANS LA BASE DE DONNEE (2020-02-26 17:30:00)
 		  			var date_mission_bdd = date_heure_mission_bdd.substring(0,10); //ON RECUPERE QUE LA DATE (2020-02-26)
 		  			var consultant_mission_case = "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}";
-		  			
-		  			if (date_mission_case == date_mission_bdd && ("{{ mission.consultant }}" == consultant_mission_bdd && consultant_mission_case == "{{ mission.consultant }}" || nbr_mission_oneDay == 0 && consultant_mission_case == "{{ mission.consultant }}")) {
+		  			var consultant__mission_today_bdd = "{{ mission.consultant.user_django.prenom }} " + "{{ mission.consultant.user_django.nom }}";
+		  			if (date_mission_case == date_mission_bdd && (consultant__mission_today_bdd == consultant_mission_bdd && consultant_mission_case == consultant__mission_today_bdd || nbr_mission_oneDay == 0 && consultant_mission_case == consultant__mission_today_bdd)) {
 						nbr_mission_oneDay += 1;					
 					}
-					consultant_mission_bdd = "{{ mission.consultant }}";
+					consultant_mission_bdd = consultant__mission_today_bdd;
 				{% endfor %}
 				nbr_mission_oneDay_max = Math.max(nbr_mission_oneDay, nbr_mission_oneDay_max);
 				nbr_mission_oneDay = 0;
@@ -279,9 +222,9 @@
 			{% endfor %}
 
 			
-			var height_ligne = nbr_mission_oneDay_max * 28 + nbr_mission_oneDay_max;
+			var height_ligne = nbr_mission_oneDay_max * 56 + nbr_mission_oneDay_max;
 			if(nbr_mission_oneDay_max == 0 || nbr_mission_oneDay_max == 1)
-				height_ligne = 28 + nbr_mission_oneDay_max ;
+				height_ligne = 56 + nbr_mission_oneDay_max ;
 
 			
 		  	// CASES DANS UNE LIGNE
@@ -296,10 +239,10 @@
 		  			var date_mission_bdd = date_heure_mission_bdd.substring(0,10); //ON RECUPERE QUE LA DATE (2020-02-26)
 
 		  			var consultant_mission_case = "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}";
-		  			var consultant_mission_bdd = "{{ mission.consultant }}";
+		  			var consultant_mission_bdd = "{{ mission.consultant.user_django.prenom }} " + "{{ mission.consultant.user_django.nom }}";
 		  			if (date_mission_case == date_mission_bdd && consultant_mission_case == consultant_mission_bdd) {
 						var present = true;
-						var nom_mission = "{{ mission.adresse }}"; //PERMET D'AFFICHER LE NOM DE LA MISSION SUR LE PLANNING
+						var nom_mission = "{{ mission.client }}"; //PERMET D'AFFICHER LE NOM DE LA MISSION SUR LE PLANNING
 						var id_mission = "{{ mission.id }}"; //MODIFIER UNE MISSION
 						one_mission_grid.push([`<button draggable="true" id="mission_` + id_mission + `" class="missions" data-toggle="modal" data-target="#add_mission"> ` + nom_mission + ` </button>`]);
 					}
@@ -329,15 +272,15 @@
 		  	month_j_moins1 = moment().add(i-1,'days').format("M"); // on recupère le mois du jour d'avant
 		  	month_j_moins3 = moment().add(i-3,'days').format("M"); // cas du lundi
 		  	if(month_j_moins1 != mois_one_num || jours_lettres[0] == 'l' && month_j_moins3 != mois_one_num){ // si le mois du jours d'avant est différent du jour même dans la var "mois" ou on est lundi est le vendredi avant le lundi est un mois différent	  		
-				var new_code = [`<div id="mois_` + mois_one_num +  `" class="jours" style="height:` + height_ligne + `px;"><span class="texte_jours">` + jours_lettres.toString() +`   `  + jours_chiffres.toString() + "/"  + mois_one_num.toString() + `</span></div>`]; // on ajoute un id pour le fonctionnement du chgmt de mois lors du scroll			 
+				var new_code = [`<div id="mois_` + mois_one_num +  `" class="jours" style="height:` + height_ligne + `px;"><div class="texte_jours">` + jours_lettres.toString() + `</div><div class="texte_jours">`  + jours_chiffres.toString() + `</div></div>`]; // on ajoute un id pour le fonctionnement du chgmt de mois lors du scroll			 
 		  	}
 		  	else{
 		  		if(i == today){ // si on est au jour d'ojd, on le caractérise dans l'id (permet le fonctionnement de l'option "j'arrive sur ojd quand je charge la page")
-					var new_code = [`<div id="today" class="jours" style="height:` + height_ligne + `px;"><span class="texte_jours">` + jours_lettres.toString() +`   `  + jours_chiffres.toString() + "/"  + mois.toString() + `</span></div>`];
+					var new_code = [`<div id="today" class="jours" style="height:` + height_ligne + `px;"><div class="texte_jours">` + jours_lettres.toString() + `</div><div class="texte_jours">`  + jours_chiffres.toString() + `</div></div>`];
 				}
 				else{
 				// Création et implémentation de la date (bord guauche du planning)
-		  		var new_code = [`<div class="jours" style="height:` + height_ligne + `px;"><span class="texte_jours">` + jours_lettres.toString() +`   `  + jours_chiffres.toString() + "/"  + mois.toString() + `</span></div>`];
+		  		var new_code = [`<div class="jours" style="height:` + height_ligne + `px;"><div class="texte_jours">` + jours_lettres.toString() + `</div><div class="texte_jours">`  + jours_chiffres.toString() + `</div></div>`];
 				}  				
 		  	}
 		
@@ -371,7 +314,7 @@
 	loadTab(nombre_jours_affiches_passe, nombre_jours_affiches_futur); //on implemente le premier chargement du planning
 	
 
-	function deleteFirstElements(){	// SUPPRESSION DE LA MOITIE DES PREMIERESCASES	
+	function deleteFirstElements(){	// SUPPRESSION DE LA MOITIE DES PREMIERES CASES	
 
 	   	for(let i = 1; i <= nombre_lignes_total / 2 ; i++){
 	   		var date_left_side = document.getElementById('first_table').children[1];
@@ -380,6 +323,15 @@
 			line_gids.parentNode.removeChild(line_gids);
 	   	}
 
+	}
+
+	function deleteLastElements(){ // SUPPRESSION DE LA MOITIE DES DERNIERES CASES	
+		for(let i = 1; i <= nombre_lignes_total / 2 ; i++){
+	   		var date_left_side = document.getElementById('first_table').lastChild;
+			var line_gids = document.getElementById('grids').lastChild;
+			date_left_side.parentNode.removeChild(date_left_side);
+			line_gids.parentNode.removeChild(line_gids);
+	   	}
 	}
 
 	//quand on atteint le bottom du scroll on charge les nouvelles données (suppression + ajout de lignes)
@@ -393,20 +345,26 @@
 			    nombre_jours_affiches_futur = nbr;
 			    nbre_weekend = 0;
 			}
+			else if($(this).scrollTop() == 0){
+				deleteLastElements();
+				var nbr = nombre_jours_affiches_futur + nombre_lignes_total / 2 + nbre_weekend;
+			}
 		})
-	});	
+	});
+
+
 
 	// fonctionnement du chgmt de mois lors du scroll
 	$(window).bind('mousewheel', function(event) {
 		if (event.originalEvent.wheelDelta >= 0) { // scroll vers le haut (donc les dates descendent)
 
-		    // console.log('Scroll up');		    
+		    console.log('Scroll up');		    
 		    for (var i = 1; i <= 12 ; i++) {
 
-		    	var mois = document.getElementById("mois_" + i); 
+		    	var mois_scrollup = document.getElementById("mois_" + i); 
 		    	try {
-		    		var div_top = document.getElementById("case_jours");
-				  	var offsetTop_mois = mois.offsetTop; // calcul la distance entre les haut du tableau et la mois visé
+		    		var div_top_scrollup = document.getElementById("case_jours");
+				  	var offsetTop_mois_scrollup = mois_scrollup.offsetTop; // calcul la distance entre les haut du tableau et la mois visé
 				}
 				catch(error) {
 				  	console.log("Ok");
@@ -415,9 +373,10 @@
 				  // Note - error messages will vary depending on browser
 				}
 		    			    	
-		    	var offsetTop_top = div_top.offsetTop; // calcul la distance entre les haut du tableau et la case jours
-		    	var diff_bottom_top = offsetTop_mois - offsetTop_top;  // calcul de la distance entre la div visée et la case "Jours" (parait inutilie mais fait fonctionner le bail)
-				if (document.getElementById(i).className == "mois this_month" && diff_bottom_top > 300) {
+		    	var offsetTop_top_scrollup = div_top_scrollup.offsetTop; // calcul la distance entre les haut du tableau et la case jours
+		    	var diff_bottom_top_scrollup = offsetTop_mois_scrollup - offsetTop_top_scrollup;  // calcul de la distance entre la div visée et la case "Jours" (parait inutilie mais fait fonctionner le bail)
+		    	console.log("mois" + i + " : " + diff_bottom_top_scrollup);
+				if (document.getElementById(i).className == "mois this_month" && diff_bottom_top_scrollup > 300) {
 					for (var n = 1; n <= 12; n++) {
 						document.getElementById(n).className = "mois";
 					}
@@ -430,7 +389,7 @@
 		}
 		else {	 // scroll vers le bas (donc les dates montent)
 											  
-		    // console.log('Scroll down');
+		    console.log('Scroll down');
 		    for (var i = 1 ; i <= 12 ; i++) {
 		    	var mois = document.getElementById("mois_" + i);
 		    	try {
@@ -445,6 +404,7 @@
 				}
 		    	var offsetTop_top = div_top.offsetTop;
 		    	var diff_bottom_top = offsetTop_mois - offsetTop_top;  // calcul de la distance entre la div visée et la case "Jours"
+		    	console.log("mois" + i + " : " + diff_bottom_top);
 		    	if (diff_bottom_top  <= 300 && diff_bottom_top  > 0 && document.getElementById(i).className != "mois this_month") {
 		    		for (var n = 1; n <= 12; n++) {
 						document.getElementById(n).className = "mois";
@@ -456,11 +416,16 @@
 	});
 
 	
-
-	    
+	function clickOnMonth(id_month){
+		for (var n = 1; n <= 12; n++) {
+			document.getElementById(n).className = "mois";
+		}
+		document.getElementById(id_month).className += " this_month";	
+	} 
 	// lors du chargement de la page, on arrive directement sur le jour d'ojd
 	var today = document.getElementById("today"); // !!!!!! PROBLEME LE DIMANCHE OU QUAND TODAY + CHGM DE MOIS
   	today.scrollIntoView();
+	
 
 </script>
 
