@@ -31,7 +31,7 @@
 }
 
 .icons_size{
-	font-size:28px;
+	font-size:21px;
 }
 
 .buttons_gestions_indiv{
@@ -298,19 +298,38 @@ input[type=submit]:hover {
     box-shadow: 0 0.125rem 0.625rem #2f353a63, 0 0.0625rem 0.125rem #2f353a63;
 }
 
+.attente{
+	background-color: #f74044;
+	color: white;
+}
+
+.cours{
+	background-color: #20a8d8;
+	color: white;
+}
+
+.terminee{
+	background-color: #3ac47d;
+	color: white;
+}
+
+.container_missions{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	font-size: 12px;
+}
 
 .missions{
-	background-color: #6262ea;
-    padding-left: 23px;
-    padding-right: 23px;
     padding-top: 17px;
     padding-bottom: 17px;
     text-align: center;
     border: none;
     border-radius: 8px;
     width: 100%;
-    margin-bottom: 1px;
-}
+    margin-bottom: 2px;
+
+ }
 
 .no_line{
 	height: 28px;

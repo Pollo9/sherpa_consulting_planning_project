@@ -39,7 +39,7 @@
 			<a class="buttons_gestions_indiv"  href="#" data-toggle="modal" data-target="#terms-txt">
 				<div class="container_filter_button">
 					<em style="" class="icon-plus icons_size"></em>
-					<p style="margin-left: 9px;margin-top: 3px;">
+					<p style="margin-left: 9px;">
 						Filtrer
 					</p>
 				</div>
@@ -192,7 +192,7 @@
 			// PARENTS D'UNE LIGNE -> ON Y FOUT LES CASES APRES
 			var parent_line_grid = [`<div class="line_grids" id="line_grids` + i + `"></div>`];
 			parent_line_grid.push();
-			document.getElementById("grids").insertAdjacentHTML('beforeend', parent_line_grid);
+			document.getElementById("grids").insertAdjacentHTML(start_or_end, parent_line_grid);
 		
 			// variables pour les dates
 		  	let jours_lettres = moment().add(i,'days').format("dddd"); // ex : lun.
@@ -207,16 +207,19 @@
 		  	var date_mission_case = annee.toString() + '-'+  mois.toString() + '-' + jours_chiffres.toString();
 
 		  	var consultant_mission_bdd = "";
+
+
 		  	// on cherche a savoir le nbr de missions maximale contenu dans une journée pour adapter la taille des cases
 		  	{% for consultant in consultants %}
 		  		var consultant_mission_bdd = '';
 		  		{% for mission in missions %}		  			
-		  			var date_heure_mission_bdd = "{{ mission.date_debut }}"; // DATE + HEURE DE LA MISSION DANS LA BASE DE DONNEE (2020-02-26 17:30:00)
-		  			var date_mission_bdd = date_heure_mission_bdd.substring(0,10); //ON RECUPERE QUE LA DATE (2020-02-26)
+		  			var date_heure_debut_mission_bdd = "{{ mission.date_debut }}"; // DATE + HEURE DE LA MISSION DANS LA BASE DE DONNEE (2020-02-26 17:30:00)
+		  			var date_debut_mission_bdd = date_heure_debut_mission_bdd.substring(0,10); //ON RECUPERE QUE LA DATE (2020-02-26)
+		  			
 		  			var consultant_mission_case = "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}";
 		  			var consultant__mission_today_bdd = "{{ mission.consultant.user_django.prenom }} " + "{{ mission.consultant.user_django.nom }}";
-		  			if (date_mission_case == date_mission_bdd && (consultant__mission_today_bdd == consultant_mission_bdd && consultant_mission_case == consultant__mission_today_bdd || nbr_mission_oneDay == 0 && consultant_mission_case == consultant__mission_today_bdd)) {
-						nbr_mission_oneDay += 1;					
+		  			if (date_mission_case == date_debut_mission_bdd && (consultant__mission_today_bdd == consultant_mission_bdd && consultant_mission_case == consultant__mission_today_bdd || nbr_mission_oneDay == 0 && consultant_mission_case == consultant__mission_today_bdd)) { // FONCTIONNE SI L'ORDRE DE LA BASE C'EST EN FONCTION DE DATE_DEBUT ET CONSULTANT
+						nbr_mission_oneDay += 1;
 					}
 					consultant_mission_bdd = consultant__mission_today_bdd;
 				{% endfor %}
@@ -239,16 +242,47 @@
 
 		  			nbr_missions += 1; //fonction modifs mission
 		  			var date_mission_case = annee.toString() + '-'+  mois.toString() + '-' + jours_chiffres.toString(); // DATE DE LA LIGNE DU PLANING OU ON SE SITUE
-		  			var date_heure_mission_bdd = "{{ mission.date_debut }}"; // DATE + HEURE DE LA MISSION DANS LA BASE DE DONNEE (2020-02-26 17:30:00)
-		  			var date_mission_bdd = date_heure_mission_bdd.substring(0,10); //ON RECUPERE QUE LA DATE (2020-02-26)
+		  			var date_heure_debut_mission_bdd = "{{ mission.date_debut }}"; // DATE + HEURE DE LA MISSION DANS LA BASE DE DONNEE (2020-02-26 17:30:00)
+		  			var date_heure_fin_mission_bdd = "{{ mission.date_fin }}";
+		  			var date_debut_mission_bdd = date_heure_debut_mission_bdd.substring(0,10); //ON RECUPERE QUE LA DATE (2020-02-26)
 
 		  			var consultant_mission_case = "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}";
 		  			var consultant_mission_bdd = "{{ mission.consultant.user_django.prenom }} " + "{{ mission.consultant.user_django.nom }}";
-		  			if (date_mission_case == date_mission_bdd && consultant_mission_case == consultant_mission_bdd) {
+		  			var missions_status_bdd = "{{ mission.status }}";
+
+		  			var heures_debutFin_missions_bdd = date_heure_debut_mission_bdd.substring(12,16) + " - " + date_heure_fin_mission_bdd.substring(12,16);
+
+		  			if (date_mission_case == date_debut_mission_bdd && consultant_mission_case == consultant_mission_bdd) {
 						var present = true;
 						var nom_mission = "{{ mission.client }}"; //PERMET D'AFFICHER LE NOM DE LA MISSION SUR LE PLANNING
 						var id_mission = "{{ mission.id }}"; //MODIFIER UNE MISSION
-						one_mission_grid.push([`<button draggable="true" id="mission_` + id_mission + `" class="missions" data-toggle="modal" data-target="#add_mission"> ` + nom_mission + ` </button>`]);
+						if(missions_status_bdd == "A"){
+							one_mission_grid.push([`
+								<button draggable="true" id="mission_` + id_mission + `" class="missions attente" data-toggle="modal" data-target="#add_mission">
+										<div class="container_missions">
+											<div class="heures_missions">` + heures_debutFin_missions_bdd + `</div>
+											<div class="status">En Attente</div>
+										</div>	
+								</button>`]);						
+						}
+						else if(missions_status_bdd == "C"){
+							one_mission_grid.push([`
+								<button draggable="true" id="mission_` + id_mission + `" class="missions cours" data-toggle="modal" data-target="#add_mission">
+										<div class="container_missions">
+											<div class="heures_missions">` + heures_debutFin_missions_bdd + `</div>
+											<div class="status">En Cours</div>
+										</div>	
+								</button>`]);
+						}
+						else{
+							one_mission_grid.push([`
+								<button draggable="true" id="mission_` + id_mission + `" class="missions terminee" data-toggle="modal" data-target="#add_mission">
+										<div class="container_missions">
+											<div class="heures_missions">` + heures_debutFin_missions_bdd + `</div>
+											<div class="status">Terminée</div>
+										</div>	
+								</button>`]);
+						}
 					}
 
 				{% endfor %}
@@ -257,16 +291,16 @@
 					var grid = [`<div class="grid" style="height:` + height_ligne + `px;" id="` + id_grid + `"></div>`];
 
 					grid.push();
-					document.getElementById("line_grids" + i ).insertAdjacentHTML('beforeend', grid);
+					document.getElementById("line_grids" + i ).insertAdjacentHTML(start_or_end, grid);
 
 					for (let m = 0 ; m < one_mission_grid.length ; m++) {
- 						document.getElementById(id_grid).insertAdjacentHTML('beforeend', one_mission_grid[m]);
+ 						document.getElementById(id_grid).insertAdjacentHTML(start_or_end, one_mission_grid[m]);
 					}
 				}
 				else{
 					var grid = [`<div class="grid" style="height:` + height_ligne + `px;" id="` + "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}" + `/` + jours_chiffres.toString() + `/` + mois.toString()  + `/` + annee.toString() + `"></div>`];
 					grid.push();
-					document.getElementById("line_grids" + i ).insertAdjacentHTML('beforeend', grid);
+					document.getElementById("line_grids" + i ).insertAdjacentHTML(start_or_end, grid);
 				}
 											
 			{% endfor %}
@@ -290,7 +324,7 @@
 		  	}
 		
 			new_code.push();
-			document.getElementById("first_table").insertAdjacentHTML('beforeend',new_code);
+			document.getElementById("first_table").insertAdjacentHTML(start_or_end,new_code);
 
 			// quand on arrive sur vendredi on ajoute une ligne vide pour séparer les semaines
 		  	if(jours_lettres[0] == 'v'){ 
@@ -298,25 +332,25 @@
 				// Ligne où il n'y a pas de jour donc ligne vide --> BLOC PRINCIPAL AVEC MISSIONS
 				var parent_line_grid_empty = [`<div class="line_grids" id="no_line` + i + `"></div>`]; //changement d'id pour la ligne vide
 				parent_line_grid_empty.push()
-				document.getElementById("grids").insertAdjacentHTML('beforeend', parent_line_grid_empty); //on incrémente la ligne vide
+				document.getElementById("grids").insertAdjacentHTML(start_or_end, parent_line_grid_empty); //on incrémente la ligne vide
 
 				// on implémente les cases de la lignes vides avec juste un border bottom
 				{% for consultant in consultants %}			
 					no_line.push()
-					document.getElementById("no_line" + i).insertAdjacentHTML('beforeend', no_line);
+					document.getElementById("no_line" + i).insertAdjacentHTML(start_or_end, no_line);
 				{% endfor %}
 
 				// Création et implémentation de la transition de semaine (les trois traits) -> COLONNE DE GUAUCHE		
 		  		var space_line = [`<div id="space` + nbre_weekend + `" class="jours"><span style="text-align:center;" class="texte_jours"> --- </span></div>`];
 				space_line.push();
-				document.getElementById("first_table").insertAdjacentHTML('beforeend',space_line);
+				document.getElementById("first_table").insertAdjacentHTML(start_or_end,space_line);
 				i+=2; // pas de weekend donc on passe directement au lundi			
 		  	}	
 		}
 	}
 
 	var nombre_lignes_total = (-nombre_jours_affiches_passe) + nombre_jours_affiches_futur - nbre_weekend; // permet de calculer le nombre de lignes exact (en enlevant une ligne à chaque weekend, une ligne car on implémente une ligne vide)
-	loadTab(nombre_jours_affiches_passe, nombre_jours_affiches_futur); //on implemente le premier chargement du planning
+	loadTab(nombre_jours_affiches_passe, nombre_jours_affiches_futur, 'beforeend'); //on implemente le premier chargement du planning
 	
 
 	function deleteFirstElements(){	// SUPPRESSION DE LA MOITIE DES PREMIERES CASES	
@@ -345,14 +379,31 @@
 			if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
 				deleteFirstElements();
 				var nbr = nombre_jours_affiches_futur + nombre_lignes_total / 2 + nbre_weekend;
-			    loadTab(nombre_jours_affiches_futur, nbr);
+			    loadTab(nombre_jours_affiches_futur, nbr, 'beforeend');
 			    nombre_jours_affiches_passe = nombre_jours_affiches_futur;
 			    nombre_jours_affiches_futur = nbr;
 			    nbre_weekend = 0;
 			}
 			else if($(this).scrollTop() == 0){
+
+				var consultants_grids = document.getElementById('grids').firstChild;
+				consultants_grids.parentNode.removeChild(consultants_grids);
 				deleteLastElements();
 				var nbr = nombre_jours_affiches_futur + nombre_lignes_total / 2 + nbre_weekend;
+				loadTab(nombre_jours_affiches_futur, nbr, 'afterbegin');
+			    nombre_jours_affiches_passe = nombre_jours_affiches_futur;
+			    nombre_jours_affiches_futur = nbr;
+			    nbre_weekend = 0;
+
+			    var consultants_line = [`<span class="second_table" id="table_consultants"></span>`];
+			    document.getElementById('grids').insertAdjacentHTML('afterbegin',consultants_line);
+			    // Affichage des consultants dans la barre du dessus
+				{% for consultant in consultants %}
+						var new_code_consultants = [`<div class="consultants">` + "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}"+ `</div>`];
+						new_code_consultants.push();
+						document.getElementById('table_consultants').insertAdjacentHTML('beforeend',new_code_consultants);
+				{% endfor %}
+				
 			}
 		})
 	});

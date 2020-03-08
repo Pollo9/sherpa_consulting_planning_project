@@ -46,6 +46,7 @@ class Bdd_consultants(models.Model):
 	theme_junior = models.ManyToManyField(Bdd_theme, related_name='theme_junior')
 	theme_confirme = models.ManyToManyField(Bdd_theme, related_name='theme_confirme')
 	theme_senior = models.ManyToManyField(Bdd_theme, related_name='theme_senior')
+	archive = models.BooleanField(default=False)
 	
 	class Meta:
 		verbose_name = "Consultant"
@@ -92,6 +93,7 @@ class Bdd_client(models.Model):
 	nom = models.CharField(default=' ',max_length=400)
 	code_couleur = models.CharField(default=' ',max_length=400)
 	mission_type = models.ManyToManyField(Bdd_mission_type_client)
+	archive = models.BooleanField(default=False)
 	
 	class Meta:
 		verbose_name = "Client"
@@ -137,7 +139,7 @@ class Bdd_missions(models.Model):
 	
 	class Meta:
 		verbose_name = "Mission"
-		ordering = ['id']
+		ordering = ['date_debut','consultant']
 	
 	def __str__(self):
 		return self.client.nom+' ('+self.status+')'
