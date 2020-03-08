@@ -2,8 +2,8 @@
 	color: #fff;
     background-color: #2f353a;
     border-color: #2f353a;
-    box-shadow: 0 0.125rem 0.625rem #2f353a, 0 0.0625rem 0.125rem rgba(58, 196, 125,0.5);
-    border-radius: 10%;
+    box-shadow: 0 0.125rem 0.625rem #2f353a63, 0 0.0625rem 0.125rem rgba(58, 196, 125,0.5);
+    border-radius: 5%;
     display: flex;
 }
 
@@ -11,8 +11,8 @@
 	color: #fff;
     background-color: #3ac47d;
     border-color: #3ac47d;
-    box-shadow: 0 0.125rem 0.625rem rgba(58, 196, 125, 0.4), 0 0.0625rem 0.125rem rgba(58, 196, 125,0.5);
-    border-radius: 10%;
+    box-shadow: 0 0.125rem 0.625rem rgba(58, 196, 125, 0.4), 0 0.0625rem 0.125rem #2f353a63;
+    border-radius: 8%;
     display: flex;
     cursor: pointer;
 }
@@ -23,8 +23,8 @@
 	color: #fff;
     background-color: #2f353a;
     border-color: #2f353a;
-    box-shadow: 0 0.125rem 0.625rem #2f353a, 0 0.0625rem 0.125rem rgba(58, 196, 125,0.5);
-    border-radius: 10%;
+    box-shadow: 0 0.125rem 0.625rem #2f353a63, 0 0.0625rem 0.125rem #2f353a63;
+    border-radius: 8%;
     display: flex;
     margin-right: 10px;
     margin-left: 10px;
@@ -288,14 +288,14 @@ input[type=submit]:hover {
 	background-color: #2f353a;
 	color: white;
 	border-color: #2f353a;
-    box-shadow: 0 0.125rem 0.625rem #2f353a, 0 0.0625rem 0.125rem rgba(58, 196, 125,0.5);
+    box-shadow: 0 0.125rem 0.625rem #2f353a63, 0 0.0625rem 0.125rem #2f353a63;
 }
 
 .this_month{
 	background-color: #2f353a;
 	color: white;
 	border-color: #2f353a;
-    box-shadow: 0 0.125rem 0.625rem #2f353a, 0 0.0625rem 0.125rem rgba(58, 196, 125,0.5);
+    box-shadow: 0 0.125rem 0.625rem #2f353a63, 0 0.0625rem 0.125rem #2f353a63;
 }
 
 

@@ -92,7 +92,7 @@
 	</div>
 </div>
 <div class="table" id="table">
-	<div class="indicateur_mois"></div>
+	<!-- <div class="indicateur_mois"></div>  indicateur de chgmt de mois-->
 	<div class="first_table" id="first_table">
 		<span class="case_jours" id="case_jours">Jours</span>
 		<!-- Les dates des jours -->
@@ -150,6 +150,7 @@
 {% block script %} 
 <script src="{% static 'planning/js/moment-with-locales.min.js' %}"></script> <!-- import de moment.js pour les dates -->
 <script type="text/javascript">
+	moment.locale('fr'); // definition de l'heure française (A METTRE AU TOUT DEBUT)
 
 	var nbre_weekend = 0;//permet le fonctionnement du chargement de données
 
@@ -158,12 +159,16 @@
 
 	// permet le fonctionnement de la fonction "on arrive sur ojd quand on charge la page"
 	let jours_lettres_ojd = moment().format("ddd");
-	var today = -1;
-
-	if(jours_lettres_ojd[0] == 's') // si on est samedi on avance de 2 jours pour afficher lundi qui arrive
-		today -= 1;
-	else if(jours_lettres_ojd[0] == 'd') // si on est dimanche on avance de 1 jours pour afficher lundi qui arrive
-		today -= 2;
+	
+	if(jours_lettres_ojd[0] == 'd'){ // si on est dimanche on avance de 2 jours pour afficher lundi qui arrive
+		var today = 1;
+	}
+	else if(jours_lettres_ojd[0] == 's'){ // si on est samedi on avance de 1 jour pour afficher lundi qui arrive
+		var today = 2;
+	}
+	else{
+		var today = 0; //sinon on scroll sur le jour meme
+	}
 	
 
 
@@ -174,7 +179,7 @@
 			document.getElementById("table_consultants").insertAdjacentHTML('beforeend',new_code_consultants);
 	{% endfor %}
 
-	moment.locale('fr'); // definition de l'heure française
+	
 
 	// mettre en couleur le mois ou on se trouve
 	let date = moment().format("M");
@@ -184,7 +189,6 @@
 	
 	function loadTab(nombre_jours_affiches_passe, nombre_jours_affiches_futur, start_or_end){
 		for (let i = nombre_jours_affiches_passe ; i < nombre_jours_affiches_futur; i++) { // nombre de jours chargés
-
 			// PARENTS D'UNE LIGNE -> ON Y FOUT LES CASES APRES
 			var parent_line_grid = [`<div class="line_grids" id="line_grids` + i + `"></div>`];
 			parent_line_grid.push();
@@ -277,6 +281,7 @@
 		  	else{
 		  		if(i == today){ // si on est au jour d'ojd, on le caractérise dans l'id (permet le fonctionnement de l'option "j'arrive sur ojd quand je charge la page")
 					var new_code = [`<div id="today" class="jours" style="height:` + height_ligne + `px;"><div class="texte_jours">` + jours_lettres.toString() + `</div><div class="texte_jours">`  + jours_chiffres.toString() + `</div></div>`];
+					console.log("t chaud");
 				}
 				else{
 				// Création et implémentation de la date (bord guauche du planning)
@@ -376,7 +381,7 @@
 		    	var offsetTop_top_scrollup = div_top_scrollup.offsetTop; // calcul la distance entre les haut du tableau et la case jours
 		    	var diff_bottom_top_scrollup = offsetTop_mois_scrollup - offsetTop_top_scrollup;  // calcul de la distance entre la div visée et la case "Jours" (parait inutilie mais fait fonctionner le bail)
 		    	console.log("mois" + i + " : " + diff_bottom_top_scrollup);
-				if (document.getElementById(i).className == "mois this_month" && diff_bottom_top_scrollup > 300) {
+				if (document.getElementById(i).className == "mois this_month" && diff_bottom_top_scrollup > 27) {
 					for (var n = 1; n <= 12; n++) {
 						document.getElementById(n).className = "mois";
 					}
@@ -405,7 +410,7 @@
 		    	var offsetTop_top = div_top.offsetTop;
 		    	var diff_bottom_top = offsetTop_mois - offsetTop_top;  // calcul de la distance entre la div visée et la case "Jours"
 		    	console.log("mois" + i + " : " + diff_bottom_top);
-		    	if (diff_bottom_top  <= 300 && diff_bottom_top  > 0 && document.getElementById(i).className != "mois this_month") {
+		    	if (diff_bottom_top  <= 27 && diff_bottom_top  > 0 && document.getElementById(i).className != "mois this_month") {
 		    		for (var n = 1; n <= 12; n++) {
 						document.getElementById(n).className = "mois";
 					}
@@ -420,11 +425,13 @@
 		for (var n = 1; n <= 12; n++) {
 			document.getElementById(n).className = "mois";
 		}
-		document.getElementById(id_month).className += " this_month";	
+		document.getElementById(id_month).className += " this_month";
+		document.getElementById("table").scrollTop -= 100;
 	} 
 	// lors du chargement de la page, on arrive directement sur le jour d'ojd
 	var today = document.getElementById("today"); // !!!!!! PROBLEME LE DIMANCHE OU QUAND TODAY + CHGM DE MOIS
-  	today.scrollIntoView();
+  	today.scrollIntoView(); //on scoll a la div d'ojd 
+  	document.getElementById("table").scrollTop -= 26; //on scroll de 26 px de plus parce le jours s'affiche sous la barre du haut du planning
 	
 
 </script>
