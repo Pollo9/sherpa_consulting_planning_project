@@ -113,7 +113,6 @@ def sms(request):
 
 # @login_required
 def planning(request):
-
 	# if not(request.user.groups.filter(name__in=["Admi"]).exists()):
 	# 	return HttpResponseRedirect('/messagerie')
 
@@ -128,7 +127,8 @@ def planning(request):
 	# group = Group.objects.get(name="Formateur")
 	# moi.groups.add(group)
 	# moi.save()
-
+	adresses = Bdd_adresse_client.objects.all()
+	clients = Bdd_client.objects.all()
 	consultants = Bdd_consultants.objects.all()
 	missions = Bdd_missions.objects.all()
 	if(request.method == 'POST' and 'ajouter_mission' in request.POST):
@@ -141,10 +141,24 @@ def planning(request):
 			ajouter_obj.status = request.POST.get('status', '')
 
 			ajouter_obj.save()
-		return HttpResponseRedirect('planning')
+		return HttpResponseRedirect('/planning')
+
+	if(request.method == 'POST' and 'modifier_mission' in request.POST):
+		form = ajouter_missionForm(request.POST, request.FILES)
+		print(request.POST.get('id'))
+		mission = Bdd_missions.objects.get(id = request.POST.get('id'))
+		mission.date_debut = request.POST.get('date-debut')
+		mission.date_fin = request.POST.get('date-fin')
+		mission.client = Bdd_client.objects.get(id = request.POST.get('client'))
+		mission.adresse = Bdd_adresse_client.objects.get(id = request.POST.get('adresse'))
+		if request.POST["visible_consultants"]:
+			mission.visible_consultant = True;
+		else:
+			mission.visible_consultant = False;
 			
-	else:
-		form = ajouter_missionForm()
+		mission.save()
+		return HttpResponseRedirect('/planning')
+			
 
 	context = locals()
 	template = "planning.html"

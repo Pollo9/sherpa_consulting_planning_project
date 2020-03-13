@@ -1,3 +1,9 @@
+
+
+option[value=""][disabled] {
+      display: none;
+      }
+
 .bouton_filtrer{
 	color: #fff;
     background-color: #2f353a;
@@ -62,7 +68,7 @@
 
 input, select {
   width: 100%;
-  padding: 12px 20px;
+  padding: 6px 20px;
   margin: 8px 0;
   border: 1px solid #ccc;
   border-radius: 4px;

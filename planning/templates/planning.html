@@ -112,7 +112,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<form action="{% url 'planning' %}" method="post" enctype="multipart/form-data">
+				<!-- <form action="{% url 'planning' %}" method="post" enctype="multipart/form-data">
 				    {% csrf_token %}
 				    <p>
 				    	<label for="id_date_debut">Date debut&nbsp;:</label> <input type="datetime-local" name="date_debut" id="id_date_debut" maxlength="400" required="">
@@ -132,6 +132,54 @@
 					</p>
 
 				    {{ form.as_p }}
+				    <input type="submit" name="ajouter_mission" value="Créer une misson">
+				</form> -->
+				<form action="/planning/" method="post" enctype="multipart/form-data">
+				    {% csrf_token %}
+				    <p>
+				    	<label for="id_date_debut">Date debut&nbsp;:</label> <input type="datetime-local" name="date_debut" id="id_date_debut" maxlength="400" required="" value="TEST">
+				    </p>
+					<p>
+						<label for="id_date_fin">Date fin&nbsp;:</label> <input type="datetime-local" name="date_fin" id="id_date_fin" maxlength="400" required="">
+					</p>
+					<p>
+						<label for="id_status">Statuts&nbsp;:</label> <select name="status" id="id_status" value="Prout">
+						<option value="" disabled selected>Choisir un statut</option>
+						  <option value="A">En Attente</option>
+
+						  <option value="C">En Cours</option>
+
+						  <option value="T">Terminée</option>
+
+						</select>
+					</p>
+
+				    <p><label for="id_consultant">Consultant&nbsp;:</label> 
+				    	<select name="consultant" id="id_consultant">
+				    		<option value="" disabled selected>Choisir un consultant</option>
+				    		{% for consultant in consultants %}
+						  	<option value="{{ consultant.id }}">{{ consultant.user_django.nom }}</option>
+				    		{% endfor %}
+						</select>
+					</p>
+					<p><label for="id_client">Client&nbsp;:</label>
+						<select name="client" id="id_client">
+							<option value="" disabled selected>Choisir un client</option>
+						  {% for client in clients %}
+							  	<option value="{{ client.id}}"> {{ client.nom }} </option>
+					      {% endfor %}
+						</select>
+					</p>
+					<p><label for="id_adresse">Adresse&nbsp;:</label>
+						
+						<select name="adresse" id="id_adresse">
+							<option value="" disabled selected>Choisir une adresse</option>
+						  {% for adresse in adresses %}
+							  	<option value="{{ adresse.id}}"> {{ adresse.adresse }} </option>
+					      {% endfor %}
+						</select>
+					</p>
+					<p><label for="id_visible_consultant">Visible par consultant ?&nbsp;</label> <input type="checkbox" name="visible_consultant" id="id_visible_consultant"></p>
 				    <input type="submit" name="ajouter_mission" value="Créer une misson">
 				</form>
 			</div>
@@ -249,40 +297,38 @@
 		  			var consultant_mission_case = "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}";
 		  			var consultant_mission_bdd = "{{ mission.consultant.user_django.prenom }} " + "{{ mission.consultant.user_django.nom }}";
 		  			var missions_status_bdd = "{{ mission.status }}";
+		  			console.log(date_mission_case);
+		  			console.log(date_debut_mission_bdd);
 
 		  			var heures_debutFin_missions_bdd = date_heure_debut_mission_bdd.substring(12,16) + " - " + date_heure_fin_mission_bdd.substring(12,16);
-
+		  			console.log(date_debut_mission_bdd);
 		  			if (date_mission_case == date_debut_mission_bdd && consultant_mission_case == consultant_mission_bdd) {
 						var present = true;
-						var nom_mission = "{{ mission.client }}"; //PERMET D'AFFICHER LE NOM DE LA MISSION SUR LE PLANNING
+						var client_mission = "{{ mission.client }}"; //PERMET D'AFFICHER LE NOM DE LA MISSION SUR LE PLANNING
 						var id_mission = "{{ mission.id }}"; //MODIFIER UNE MISSION
+						var consultant_mission = "{{ mission.consultant }}";
+						var adresse_mission = "{{ mission.adresse }}";
+						var visible_consultant_mission = "{{ mission.visible_consultant }}";
+
 						if(missions_status_bdd == "A"){
-							one_mission_grid.push([`
-								<button draggable="true" id="mission_` + id_mission + `" class="missions attente" data-toggle="modal" data-target="#add_mission">
-										<div class="container_missions">
-											<div class="heures_missions">` + heures_debutFin_missions_bdd + `</div>
-											<div class="status">En Attente</div>
-										</div>	
-								</button>`]);						
+							var statut = "En Attente";
+							var class_button = "attente";						
 						}
 						else if(missions_status_bdd == "C"){
-							one_mission_grid.push([`
-								<button draggable="true" id="mission_` + id_mission + `" class="missions cours" data-toggle="modal" data-target="#add_mission">
-										<div class="container_missions">
-											<div class="heures_missions">` + heures_debutFin_missions_bdd + `</div>
-											<div class="status">En Cours</div>
-										</div>	
-								</button>`]);
+							var statut = "En Cours";
+							var class_button = "cours";
 						}
 						else{
-							one_mission_grid.push([`
-								<button draggable="true" id="mission_` + id_mission + `" class="missions terminee" data-toggle="modal" data-target="#add_mission">
+							var statut = "Terminée";
+							var class_button = "terminee";
+						}
+						one_mission_grid.push([`
+								<button data-status="` + statut + `" data-client="` + client_mission + `" data-consultant="` + consultant_mission + `" data-adresse="` + adresse_mission + `" data-visible="` + visible_consultant_mission + `" onclick="display_popUp_modifs(` + id_mission + `)" draggable="true" id="mission_` + id_mission + `" class="missions ` + class_button + `" data-toggle="modal" data-target="#modif_mission">
 										<div class="container_missions">
 											<div class="heures_missions">` + heures_debutFin_missions_bdd + `</div>
-											<div class="status">Terminée</div>
+											<div class="status">` + statut + `</div>
 										</div>	
 								</button>`]);
-						}
 					}
 
 				{% endfor %}
@@ -315,7 +361,6 @@
 		  	else{
 		  		if(i == today){ // si on est au jour d'ojd, on le caractérise dans l'id (permet le fonctionnement de l'option "j'arrive sur ojd quand je charge la page")
 					var new_code = [`<div id="today" class="jours" style="height:` + height_ligne + `px;"><div class="texte_jours">` + jours_lettres.toString() + `</div><div class="texte_jours">`  + jours_chiffres.toString() + `</div></div>`];
-					console.log("t chaud");
 				}
 				else{
 				// Création et implémentation de la date (bord guauche du planning)
@@ -361,7 +406,6 @@
 			date_left_side.parentNode.removeChild(date_left_side);
 			line_gids.parentNode.removeChild(line_gids);
 	   	}
-
 	}
 
 	function deleteLastElements(){ // SUPPRESSION DE LA MOITIE DES DERNIERES CASES	
@@ -402,8 +446,7 @@
 						var new_code_consultants = [`<div class="consultants">` + "{{ consultant.user_django.prenom }} " + "{{ consultant.user_django.nom }}"+ `</div>`];
 						new_code_consultants.push();
 						document.getElementById('table_consultants').insertAdjacentHTML('beforeend',new_code_consultants);
-				{% endfor %}
-				
+				{% endfor %}				
 			}
 		})
 	});
@@ -470,20 +513,109 @@
 		    }	    
 		}
 	});
-
 	
 	function clickOnMonth(id_month){
 		for (var n = 1; n <= 12; n++) {
 			document.getElementById(n).className = "mois";
 		}
 		document.getElementById(id_month).className += " this_month";
-		document.getElementById("table").scrollTop -= 100;
 	} 
 	// lors du chargement de la page, on arrive directement sur le jour d'ojd
 	var today = document.getElementById("today"); // !!!!!! PROBLEME LE DIMANCHE OU QUAND TODAY + CHGM DE MOIS
   	today.scrollIntoView(); //on scoll a la div d'ojd 
   	document.getElementById("table").scrollTop -= 26; //on scroll de 26 px de plus parce le jours s'affiche sous la barre du haut du planning
 	
+
+	function display_popUp_modifs(id_mission){
+		var status_mission = document.getElementById("mission_" + id_mission).getAttribute("data-status");
+		var consultant_mission = document.getElementById("mission_" + id_mission).getAttribute("data-consultant");
+		var client_mission = document.getElementById("mission_" + id_mission).getAttribute("data-client");
+		var adresse_mission = document.getElementById("mission_" + id_mission).getAttribute("data-adresse");
+		var visible_consultant_mission = document.getElementById("mission_" + id_mission).getAttribute("data-visible");
+		console.log(visible_consultant_mission);
+		if(visible_consultant_mission == "True"){
+			var check = "checked";
+		}
+		else{
+			var check = '';
+		}
+		popUp_modifs_missions = [`
+			<div class="modal fade" id="modif_mission" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="termsLabel">Infos mission</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						</div>
+						<div class="modal-body">
+							<form action="/planning/" method="post" enctype="multipart/form-data">
+							    {% csrf_token %}
+							    
+							    
+							    <p>
+							    	<label for="id_date_debut">Date debut&nbsp;:</label> <input type="datetime-local" name="date_debut" id="id_date_debut" maxlength="400" required="">
+							    </p>
+								<p>
+									<label for="id_date_fin">Date fin&nbsp;:</label> <input type="datetime-local" name="date_fin" id="id_date_fin" maxlength="400" required="">
+								</p>
+								<p>
+									<label for="id_status">Status&nbsp;:</label> <select name="status" id="id_status" value="Prout">
+									  <option value="" disabled selected>` + status_mission + `</option>
+									  <option value="A">En Attente</option>
+
+									  <option value="C">En Cours</option>
+
+									  <option value="T">Terminée</option>
+
+									</select>
+								</p>
+
+							    <p><label for="id_consultant">Consultant&nbsp;:</label> 
+							    	<select name="consultant" id="id_consultant">
+							    		<option value="" disabled selected>` + consultant_mission + `</option>
+							    		{% for consultant in consultants %}
+									  	<option value="{{ consultant.id }}">{{ consultant.user_django.nom }}</option>
+							    		{% endfor %}
+									</select>
+								</p>
+								<p><label for="id_client">Client&nbsp;:</label>
+									<select name="client" id="id_client">
+									<option value="" disabled selected>` + client_mission + `</option>
+									  {% for client in clients %}
+										  	<option value="{{ client.id}}"> {{ client.nom }} </option>
+								      {% endfor %}
+									</select>
+								</p>
+
+								<p><label for="id_adresse">Adresse&nbsp;:</label>
+									<select name="adresse" id="id_adresse">
+									<option value="" disabled selected>` + adresse_mission + `</option>
+									  {% for adresse in adresses %}
+										  	<option value="{{ adresse.id}}"> {{ adresse.adresse }} </option>
+								      {% endfor %}
+									</select>
+								</p>
+								<p>
+							    	<label style="opacity:0;" for="id_id">Id&nbsp;:</label> <input type="hidden" name="id" value="` + id_mission + `">
+							    </p>
+								<p><label for="id_visible_consultant">Visible par consultant ?&nbsp;</label> <input type="checkbox" name="visible_consultant" id="id_visible_consultant" ` + check + `></p>
+
+							    <input type="submit" name="modifier_mission" value="Modifier la mission">
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn_1" data-dismiss="modal">Fermer</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+		`]
+
+		popUp_modifs_missions.push();
+		document.getElementById('add_mission').insertAdjacentHTML('afterend',popUp_modifs_missions);
+	}
 
 </script>
 

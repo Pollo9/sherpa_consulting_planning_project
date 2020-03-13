@@ -26,7 +26,8 @@
     color: #23282c;
     z-index: 1;
 }
-    #onglets .actif{
+
+#onglets .actif{
     background-color: #38a8d8;
     color: white;
 }
