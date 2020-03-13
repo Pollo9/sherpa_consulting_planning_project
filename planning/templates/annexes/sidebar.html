@@ -1,9 +1,5 @@
 {% load staticfiles %}
 
-{% for group in request.user.groups.all %}
-{% if 'Admi' == group.name %}
-{% load staticfiles %}
-
 <div class="sidebar-nav sidebar">
 	<div class="profile-sidebar">
 		<a href="">
@@ -25,21 +21,27 @@
 					<i class="nav-icon icon-speedometer"></i> Planning
 				</a>
 			</li>
+			{% if admin %}
 			<li class="nav-item">
 				<a class="nav-link" href="{% url 'missions' %}">
 					<i class="nav-icon icon-people"></i> Missions
 				</a>
 			</li>
+			{% endif %}
+			{% if admin %}
 			<li class="nav-item">
 				<a class="nav-link" href="{% url 'clients' %}">
 					<i class="nav-icon icon-docs"></i> Clients
 				</a>
 			</li>
+			{% endif %}
+			{% if admin %}
 			<li class="nav-item">
 				<a class="nav-link" href="{% url 'consultants' %}">
 					<i class="nav-icon icon-notebook"></i> Consultants
 				</a>
 			</li>
+			{% endif %}
 			<li class="nav-item">
 				<a class="nav-link" href="{% url 'messagerie' %}">
 					<i class="nav-icon icon-notebook"></i> Messagerie
@@ -48,13 +50,13 @@
 					{% endif %}
 				</a>
 			</li>
+			{% if admin %}
 			<li class="nav-item">
-				<a class="nav-link" href="#">
+				<a class="nav-link" href="">
 					<i class="nav-icon icon-notebook"></i> Réglages
 				</a>
 			</li>
+			{% endif %}
 		</ul>
 	</nav>
 </div>
-{% endif %}
-{% endfor %}

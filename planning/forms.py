@@ -7,5 +7,3 @@ class ajouter_missionForm(ModelForm):
 	class Meta:
 		model = Bdd_missions
 		fields = ['consultant','client','adresse','visible_consultant']
-
-

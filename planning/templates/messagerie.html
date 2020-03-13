@@ -15,12 +15,12 @@
 
         <div class="row heading">
           <div class="col-sm-10 col-xs-10 heading-name">
-            <p class="heading-name-meta" id="heading-name-meta">Sherpa Consulting
+            <p class="heading-name-meta" id="heading-name-meta">{{user.first_name}} {{user.last_name}}
             </p>
           </div>
           {% if consultant_selectionne %}
           <div class="col-sm-2 col-xs-2 heading-compose  pull-right">
-            <a href="{% url 'messages' consultant_selectionne.id consultant_selectionne.nom 0 %}">
+            <a href="{% url 'message' consultant_selectionne.username 0 %}">
               <i class="fa fa-redo-alt" aria-hidden="true" align></i>
             </a>
           </div>
@@ -30,26 +30,25 @@
         <div class="row sideBar">
           <div>
           {% for consultant in consultants %}
-          {% if consultant.nom != "Consulting" and consultant.prenom != "Sherpa" %}
-          {% if consultant.id == consultant_selectionne.id %}
-            <a href="{% url 'messages' consultant.id consultant.nom 0 %}"><div class="row sideBar-body-selectionne">
+          {% if consultant.username == consultant_selectionne.username %}
+            <a href="{% url 'message' consultant.username 0 %}"><div class="row sideBar-body-selectionne">
           {% else %}
-            <a href="{% url 'messages' consultant.id consultant.nom 0 %}"><div class="row sideBar-body">
+            <a href="{% url 'message' consultant.username 0 %}"><div class="row sideBar-body">
           {% endif %}
               <div class="col-sm-12 col-xs-12 sideBar-main">
                 <div class="row">
                   <div class="col-sm-10 col-xs-10 sideBar-name">
                     <span class="name-meta" id="name-meta">
-                      {{ consultant.prenom }} {{ consultant.nom }}
+                      {{ consultant.first_name }} {{ consultant.last_name }}
                     </span>
                   </div>
                   <div class="col-sm-2 col-xs-2 sideBar-notif">
                     {% for k,v in notif.items %}
-                    {% if k == consultant.id and v > 0 and v < 10 %}
+                    {% if k == consultant.username and v > 0 and v < 10 %}
                     <span class="notif-meta">
                       {{ v }}
                     </span>
-                    {% elif k == consultant.id and v > 9 %}
+                    {% elif k == consultant.username and v > 9 %}
                     <span class="notif-meta">
                       9+
                     </span>
@@ -59,7 +58,6 @@
                 </div>
               </div>
             </div></a>
-          {% endif %}
           {% endfor %}
           </div>
         </div>
@@ -71,7 +69,7 @@
     <div class="col-sm-8 conversation">
       <div class="row heading">
         <div class="col-sm-8 col-xs-7 heading-name">
-          <p class="heading-name-meta" id="heading-name-meta">{{ consultant_selectionne.prenom }} {{ consultant_selectionne.nom }}
+          <p class="heading-name-meta" id="heading-name-meta">{{ consultant_selectionne.first_name }} {{ consultant_selectionne.last_name }}
           </p>
         </div>
       </div>
@@ -81,7 +79,7 @@
         <div class="row message-previous">
         {% if see_all == 0 and msg_count > 10 %}
           <div class="col-sm-12 previous">
-            <a href="{% url 'messages' consultant_selectionne.id consultant_selectionne.nom 1 %}" id="show-previous" name="20">
+            <a href="{% url 'message' consultant_selectionne.username 1 %}" id="show-previous" name="20">
               Montrer tous les messages
             </a>
           </div>
@@ -90,7 +88,7 @@
 
         <div class="message-wrapper" id="message-wrapper">
           {% for message in msg %}
-          {% if message.receveur.nom == "Consulting" and message.envoyeur.nom == consultant_selectionne.nom %}
+          {% if message.receveur.username == user.username and message.envoyeur.username == consultant_selectionne.username %}
           <div class="row message-body">
             <div class="col-sm-12 message-main-receiver">
               <div class="receiver">
@@ -103,7 +101,7 @@
               </div>
             </div>
           </div>
-          {% elif message.envoyeur.nom == "Consulting" and message.receveur.nom == consultant_selectionne.nom %}
+          {% elif message.envoyeur.username == user.username and message.receveur.username == consultant_selectionne.username %}
           <div class="row message-body">
             <div class="col-sm-12 message-main-sender">
               <div class="sender">

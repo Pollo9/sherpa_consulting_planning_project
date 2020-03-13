@@ -1,0 +1,108 @@
+{% extends 'base_planning.html' %}
+{% load staticfiles %} 
+
+{% block link %} 
+<link href="{% static 'application/css/dataTables.bootstrap4.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<style>
+	label {
+		display: inline-block;
+		width: 130px;
+	}
+	input, select {
+		width: 200px;
+	}
+	span {
+		color: #f00;
+	}
+</style>
+
+<div class="flex-row align-items-center">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<i class="icon-note"></i> Modifier la mission
+						<div class="card-header-actions">
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<!-- modifier mission -->
+								<form  method='POST'  action='' autocomplete="off"> {% csrf_token %}
+									<label for="date-debut">Date début <span>*</span></label>
+									<input type="datetime-local" name="date-debut" id="date-debut" value="{{mission_selectionnee.date_debut}}" required><br>
+									
+									<label for="date-fin">Date fin <span>*</span></label>
+									<input type="datetime-local" name="date-fin" id="date-fin" value="{{mission_selectionnee.date_fin}}" required><br>
+
+									<label for="client">Client <span>*</span></label>
+									<select name="client" id="client" required>
+									    <option value="">---------</option>
+									    {% for client in clients %}
+									    {% if client.id == mission_selectionnee.client.id %}
+									    <option value="{{client.id}}" selected>{{client.nom}}</option>
+									    {% else %}
+									    <option value="{{client.id}}">{{client.nom}}</option>
+									    {% endif %}
+									    {% endfor %}
+									</select><br>
+
+									<label for="adresse">Adresse <span>*</span></label>
+									<select name="adresse" id="adresse" required>
+									    <option value="">---------</option>
+									    {% for adresse in adresses %}
+									    {% if adresse.id == mission_selectionnee.adresse.id %}
+									    <option value="{{adresse.id}}" selected>{{adresse.nom}}</option>
+									    {% else %}
+									    <option value="{{adresse.id}}">{{adresse.nom}}</option>
+									    {% endif %}
+									    {% endfor %}
+									</select><br>
+
+									<label for="consultant">Consultant :</label>
+									<select name="consultant" id="consultant">
+									    <option value="">---------</option>
+									    {% for consultant in consultants %}
+									    {% if consultant.id == mission_selectionnee.consultant.id %}
+									    <option value="{{consultant.id}}" selected>{{consultant.user_django.first_name}} {{consultant.user_django.last_name}}</option>
+									    {% else %}
+									    <option value="{{consultant.id}}">{{consultant.user_django.first_name}} {{consultant.user_django.last_name}}</option>
+									    {% endif %}
+									    {% endfor %}
+									</select><br>
+
+									<label for="visible_consultant">Visible consultant <span>*</span></label>
+									{% if mission_selectionnee.visible_consultant %}
+									<label for="visible1" style="width: auto;">Oui</label>
+									<input type="radio" id="visible1" name="visible" value="oui" style="width: 25px;" checked>
+									<label for="visible2" style="width: auto;">Non</label>
+									<input type="radio" id="visible2" name="visible" value="non" style="width: 25px;">
+									{% else %}
+									<label for="visible1" style="width: auto;">Oui</label>
+									<input type="radio" id="visible1" name="visible" value="oui" style="width: 25px;">
+									<label for="visible2" style="width: auto;">Non</label>
+									<input type="radio" id="visible2" name="visible" value="non" style="width: 25px;" checked>
+									{% endif %}
+									<br>
+
+									<div class="form-group">
+										<button class="btn btn-primary" type="submit" name="edit" value="edit">Modifier</button>
+										<a href="{% url 'missions' %}" style="float: right;margin-top: 10px;">Retour</a>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'base_planning.html' %}
+{% load staticfiles %} 
+
+{% block link %} 
+<link href="{% static 'application/css/dataTables.bootstrap4.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<style>
+	label {
+		display: inline-block;
+		width: 130px;
+	}
+	input, select {
+		width: 200px;
+		height: auto;
+	}
+	span {
+		color: #f00;
+	}
+</style>
+
+<div class="flex-row align-items-center">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<i class="icon-note"></i> Modifier le consultant
+						<div class="card-header-actions">
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<!-- modifier client -->
+								<form  method='POST'  action='' autocomplete="off"> {% csrf_token %}
+
+									<label for="user">User <span>*</span></label>
+									<select name="user" id="user" required>
+									    <option value="">---------</option>
+									    {% for user in user_django %}
+									    {% if user.username == consultant_selectionne.user_django.username %}
+									    <option value="{{user.username}}" selected>{{user.first_name}} {{ user.last_name }}</option>
+									    {% else %}
+										<option value="{{user.username}}">{{user.first_name}} {{ user.last_name }}</option>
+									    {% endif %}
+									    {% endfor %}
+									</select><br>
+									
+									<label for="telephone">Téléphone <span>*</span></label>
+									<input type="text" name="telephone" id="telephone" value="{{consultant_selectionne.telephone}}" required><br>
+
+									<label for="adresse">Adresse <span>*</span></label>
+									<input type="text" name="adresse" id="adresse" value="{{consultant_selectionne.adresse}}" required><br>
+
+									<label for="permission">Permission <span>*</span></label>
+									<label for="permission1" style="width: auto;">Oui</label>
+									{% if consultant_selectionne.permission %}
+									<input type="radio" id="permission1" name="permission" value="oui" style="width: 25px;" checked>
+									{% else %}
+									<input type="radio" id="permission1" name="permission" value="oui" style="width: 25px;">
+									{% endif %}
+									<label for="permission2" style="width: auto;">Non</label>
+									{% if consultant_selectionne.permission %}
+									<input type="radio" id="permission2" name="permission" value="non" style="width: 25px;">
+									{% else %}
+									<input type="radio" id="permission2" name="permission" value="non" style="width: 25px;" checked>
+									{% endif %}
+									<br>
+
+									<label for="junior">Thème junior <span>*</span></label>
+									<select name="junior" id="junior" multiple required>
+									    <option value="">---------</option>
+									    {% for theme in themes %}
+									    {% if theme in consultant_selectionne.theme_junior.all %}
+									    <option value="{{theme.id}}" selected>{{theme.nom}}</option>
+									    {% else %}
+									    <option value="{{theme.id}}">{{theme.nom}}</option>
+									    {% endif %}
+									    {% endfor %}
+									</select><br>
+									<label for="confirme">Thème confirmé <span>*</span></label>
+									<select name="confirme" id="confirme" multiple required>
+									    <option value="">---------</option>
+									    {% for theme in themes %}
+									    {% if theme in consultant_selectionne.theme_confirme.all %}
+									    <option value="{{theme.id}}" selected>{{theme.nom}}</option>
+									    {% else %}
+									    <option value="{{theme.id}}">{{theme.nom}}</option>
+									    {% endif %}
+									    {% endfor %}
+									</select><br>
+									<label for="senior">Thème senior <span>*</span></label>
+									<select name="senior" id="senior" multiple required>
+									    <option value="">---------</option>
+									    {% for theme in themes %}
+									    {% if theme in consultant_selectionne.theme_senior.all %}
+									    <option value="{{theme.id}}" selected>{{theme.nom}}</option>
+									    {% else %}
+									    <option value="{{theme.id}}">{{theme.nom}}</option>
+									    {% endif %}
+									    {% endfor %}
+									</select><br>
+
+									<label for="archive">Archive <span>*</span></label>
+									<label for="archive1" style="width: auto;">Oui</label>
+									{% if consultant_selectionne.archive %}
+									<input type="radio" id="archive1" name="archive" value="oui" style="width: 25px;" checked>
+									{% else %}
+									<input type="radio" id="archive1" name="archive" value="oui" style="width: 25px;">
+									{% endif %}
+									<label for="archive2" style="width: auto;">Non</label>
+									{% if consultant_selectionne.archive %}
+									<input type="radio" id="archive2" name="archive" value="non" style="width: 25px;">
+									{% else %}
+									<input type="radio" id="archive2" name="archive" value="non" style="width: 25px;" checked>
+									{% endif %}
+
+									<div class="form-group">
+										<button class="btn btn-primary" type="submit" name="edit" value="edit">Modifier</button>
+										<a href="{% url 'consultants' %}" style="float: right;margin-top: 10px;">Retour</a>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

@@ -1,14 +1,9 @@
 from django.contrib import admin
 from .models import *
 
-
-class Bdd_userDjangoAdmin(admin.ModelAdmin):
-	search_fields = ['titre']
-	list_display = ('id','nom_de_compte','mdp','mail','nom','prenom')
-
 class Bdd_consultantsAdmin(admin.ModelAdmin):
 	search_fields = ['titre']
-	list_display = ('id','diminutif','telephone','adresse', 'permission','user_django')
+	list_display = ('id','diminutif','telephone','adresse', 'permission','user_django','archive')
 
 class Bdd_themeAdmin(admin.ModelAdmin):
 	search_fields = ['titre']
@@ -24,7 +19,7 @@ class Bdd_missionTypeClientAdmin(admin.ModelAdmin):
 
 class Bdd_clientAdmin(admin.ModelAdmin):
 	search_fields = ['titre']
-	list_display = ('id','nom','code_couleur')
+	list_display = ('id','nom','code_couleur','archive')
 
 class Bdd_adresseClientAdmin(admin.ModelAdmin):
 	search_fields = ['titre']
@@ -40,7 +35,6 @@ class Bdd_messagesAdmin(admin.ModelAdmin):
 
 
 
-admin.site.register(Bdd_user_django,Bdd_userDjangoAdmin)
 admin.site.register(Bdd_consultants,Bdd_consultantsAdmin)
 admin.site.register(Bdd_theme,Bdd_themeAdmin)
 admin.site.register(Bdd_piece_jointe_client,Bdd_pieceJointeClientAdmin)

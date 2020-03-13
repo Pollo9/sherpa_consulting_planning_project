@@ -1,0 +1,89 @@
+{% extends 'base_planning.html' %}
+{% load staticfiles %} 
+
+{% block link %} 
+<link href="{% static 'application/css/dataTables.bootstrap4.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<style>
+	label {
+		display: inline-block;
+		width: 130px;
+	}
+	input, select {
+		width: 200px;
+	}
+	span {
+		color: #f00;
+	}
+</style>
+
+<div class="flex-row align-items-center">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<i class="icon-note"></i> Ajouter une mission
+						<div class="card-header-actions">
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<!-- ajouter mission -->
+								<form  method='POST'  action='' autocomplete="off"> {% csrf_token %}
+									<label for="date-debut">Date début <span>*</span></label>
+									<input type="datetime-local" name="date-debut" id="date-debut" required><br>
+									
+									<label for="date-fin">Date fin <span>*</span></label>
+									<input type="datetime-local" name="date-fin" id="date-fin" required><br>
+
+									<label for="client">Client <span>*</span></label>
+									<select name="client" id="client" required>
+									    <option value="">---------</option>
+									    {% for client in clients %}
+									    <option value="{{client.id}}">{{client.nom}}</option>
+									    {% endfor %}
+									</select><br>
+
+									<label for="adresse">Adresse <span>*</span></label>
+									<select name="adresse" id="adresse" required>
+									    <option value="">---------</option>
+									    {% for adresse in adresses %}
+									    <option value="{{adresse.id}}">{{adresse.nom}}</option>
+									    {% endfor %}
+									</select><br>
+
+									<label for="consultant">Consultant :</label>
+									<select name="consultant" id="consultant">
+									    <option value="">---------</option>
+									    {% for consultant in consultants %}
+									    <option value="{{consultant.id}}">{{consultant.user_django.first_name}} {{consultant.user_django.last_name}}</option>
+									    {% endfor %}
+									</select><br>
+
+									<label for="visible_consultant">Visible consultant <span>*</span></label>
+									<label for="visible1" style="width: auto;">Oui</label>
+									<input type="radio" id="visible1" name="visible" value="oui" style="width: 25px;">
+									<label for="visible2" style="width: auto;">Non</label>
+									<input type="radio" id="visible2" name="visible" value="non" style="width: 25px;" checked>
+									<br>
+
+									<div class="form-group">
+										<button class="btn btn-primary" type="submit" name="add" value="add">Ajouter</button>
+										<a href="{% url 'missions' %}" style="float: right;margin-top: 10px;">Retour</a>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

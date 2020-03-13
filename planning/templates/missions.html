@@ -8,18 +8,15 @@
 {% block content %}
 <style>
 	.modal-body label {
-		display: inline-block;
-		width: 130px;
+	  display: inline-block;
+	  width: 130px;
 	}
-	.modal-body input, .modal-body select {
-		width: 150px;
+	.modal-body input,
+	.modal-body select {
+	  width: 150px;
 	}
 	.modal-body span {
-		color: #f00;
-	}
-	table#DataTables_Table_0 tbody tr:hover {
-	  background-color: #c8ced3;
-	  cursor: pointer;
+	  color: #f00;
 	}
 	.check input[type="checkbox"],
 	.check input[type="radio"] {
@@ -97,19 +94,11 @@
 	  -o-transition: .25s all ease;
 	  transition: .25s all ease;
 	}
-	  table#DataTables_Table_0 tbody tr:hover {
+	table#DataTables_Table_0 tbody tr:hover {
 	  background-color: #c8ced3;
 	  cursor: pointer;
 	}
-	 table#DataTables_Table_3 tbody tr:hover {
-	  background-color: #c8ced3;
-	  cursor: pointer;
-	}
-	 table#DataTables_Table_6 tbody tr:hover {
-	  background-color: #c8ced3;
-	  cursor: pointer;
-	}
-	 table#DataTables_Table_7 tbody tr:hover {
+	table#DataTables_Table_1 tbody tr:hover {
 	  background-color: #c8ced3;
 	  cursor: pointer;
 	}
@@ -121,77 +110,12 @@
 			<h1 class="titre-h1">Les Missions | <span style="font-weight: bold;">{{nb_missions}}</span></h1>
 		</div>
 		<div class="col-md-6 block-btn">
-			<a href="#" data-toggle="modal" data-target="#terms-txt" style="cursor: pointer;float: right;color: #222;padding: 5px 30px 5px 12px;border-radius: 100%;"><span style="font-size: 25px;">Mission </span><em style="color: black;font-size: 30px;" class="icon-plus"></em>
+			<a class="btn btn-brand btn-lg btn-droite" type="button" href="{% url 'ajouter_missions' %}" title="Ajouter un client">
+				<i class=" icon-user-follow"></i>
 			</a>
 		</div>
 	</div>
 <!-- fin Action avec checkbox -->
-
-	{% if mission_selectionnee != None %}
-	<div class="row">
-		<div class="col-md-4" style="padding: 10px 15px;">
-			<form action="" method="POST" id="post-form"> {% csrf_token %}
-				<div class="modal-body">
-					<input type="hidden" name="id" value="{{mission_selectionnee.id}}">
-					<label for="date-debut">Date début <span>*</span></label>
-					<input type="date" name="date-debut" id="date-debut" value="{{mission_selectionnee.date_debut}}" required><br>
-					<label for="date-fin">Date fin <span>*</span></label>
-					<input type="date" name="date-fin" id="date-fin" value="{{mission_selectionnee.date_fin}}" required><br>
-					<label for="consultant">Client <span>*</span></label>
-					<select name="client" id="client" required>
-					    <option value="">---------</option>
-					    {% for client in clients %}
-					    {% if mission_selectionnee.client.id == client.id %}
-					    <option value="{{client.id}}" selected>{{client.nom}}</option>
-					    {% else %}
-					    <option value="{{client.id}}">{{client.nom}}</option>
-					    {% endif %}
-					    {% endfor %}
-					</select><br>
-					<label for="adresse">Adresse <span>*</span></label>
-					<select name="adresse" id="adresse" required>
-					    <option value="">---------</option>
-					    {% for adresse in adresses %}
-					    {% if mission_selectionnee.adresse.id == adresse.id %}
-					    <option value="{{adresse.id}}" selected>{{adresse.nom}}</option>
-					    {% else %}
-					    <option value="{{adresse.id}}">{{adresse.nom}}</option>
-					    {% endif %}
-					    {% endfor %}
-					</select><br>
-					<label for="consultant">Consultant :</label>
-					<select name="consultant" id="consultant">
-					    <option value="">---------</option>
-					    {% for consultant in consultants %}
-					    {% if mission_selectionnee.consultant.id == consultant.id %}
-					    <option value="{{consultant.id}}" selected>{{consultant.user_django.prenom}} {{consultant.user_django.nom}}</option>
-					    {% else %}
-					    <option value="{{consultant.id}}">{{consultant.user_django.prenom}} {{consultant.user_django.nom}}</option>
-					    {% endif %}
-					    {% endfor %}
-					</select><br>
-					<label for="visible_consultant">Visible consultant <span>*</span></label>
-					<label for="visible1" style="width: auto;">Oui</label>
-					{% if mission_selectionnee.visible_consultant %}
-					<input type="radio" id="visible1" name="visible" value="oui" style="width: 25px;" checked>
-					{% else %}
-					<input type="radio" id="visible1" name="visible" value="oui" style="width: 25px;">
-					{% endif %}
-					<label for="visible2" style="width: auto;">Non</label>
-					{% if mission_selectionnee.visible_consultant %}
-					<input type="radio" id="visible2" name="visible" value="non" style="width: 25px;">
-					{% else %}
-					<input type="radio" id="visible2" name="visible" value="non" style="width: 25px;" checked>
-					{% endif %}
-				</div>
-				<div class="modal-footer" style="border-top: none;">
-					<input type="submit" name="mission-modifier" value="Modifier" class="btn_1" style="padding: 0 3px;">
-					<button type="button" class="btn_1"><a href="{% url 'missions' %}" style="color: black;">Fermer</a></button>
-				</div>
-			</form>
-		</div>
-	</div>
-	{% endif %}
 
 <!-- Onglets -->
 	<ul id="onglets">
@@ -207,55 +131,80 @@
 			<div class="item" id="item1" style="display: block;">
 				<div class="card">
 					<div class="card-body">
-						<div class="">
+
+						<div>
 							<div class="action">
 								<label for="action">Action&nbsp;: 
-									<select name="action_client" id="action" required="" class="form-control1" onchange="fctselect()">
+									<select name="action_missions" id="action" required="" class="form-control1" onchange="fctselect()">
 										<option value="0" selected="">---------</option>
 										<option value="supp_element">Supprimés éléments sélectionnés</option>
 									</select>
 								</label>
 								<label for="action2 pl-1rem">
 									<input type="hidden" name="action2" value="0" class="select-across">
-									<button id="button" type="submit" class="" title="Exécuter l'action sélectionnée" name="index" value="0" style="height: 30px">Valider</button>		    
+									<button id="button" type="submit" class="btn" title="Exécuter l'action sélectionnée" name="index" value="0" style="height: 30px">Valider</button>
 								</label>
-								<button type="submit" name="export" value="export" id="export" class="btn btn-brand btn-lg btn-twitter" style="float: right;margin-top: -5px; background-color: #00aced!important; border-color: #00aced!important;" title="Exporter les leads">
-									<i class="icon-cloud-upload"></i>
-								</button>
 							</div>
 						</div>
+
 						<table id="DataTables_Table_0" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;overflow: auto;">
 							<thead>
 								<tr>
-									<th><span class="check"><input type="checkbox" id="example-select-all" style="cursor: pointer;"><label style="margin-bottom: 0;" for="example-select-all"></label></span></th>
+									<th><span class="check"><input type="checkbox" id="a-select-all" style="cursor: pointer;"><label style="margin-bottom: 0;" for="a-select-all"></label></span></th>
 									<th>Date début</th>
 									<th>Date fin</th>
 									<th>Client</th>
 									<th>Adresse</th>
 									<th>Consultant</th>
 									<th>Visible consultant</th>
+									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
+								<tr></tr>
 								{% for mission in missions %}
 								{% if mission.status == "A" %}
 								<tr>
-									<th><a href="{% url 'missions' mission.id %}" style="cursor: pointer;float: right;color: #222;border-radius: 100%;"><em style="color: black;font-size: 15px;" class="icon-settings"></em></a></th>
+									<th><span class="check"><input type="checkbox" value="{{mission.id}}" id="{{mission.id}}" name="selection_missions" class="a-check" style="cursor: pointer;"><label style="margin-bottom: 0;" for="{{mission.id}}"></label></span></th>
 									<th>{{ mission.date_debut }}</th>
 									<th>{{ mission.date_fin }}</th>
 									<th>{{ mission.client.nom }}</th>
 									<th>{{ mission.adresse.nom }}</th>
-									<th>{{ mission.consultant.user_django.prenom }} {{ mission.consultant.user_django.nom }}</th>
+									<th>{{ mission.consultant.user_django.first_name }} {{ mission.consultant.user_django.last_name }}</th>
 									{% if mission.visible_consultant == True %}
 									<th>Oui</th>
 									{% else %}
 									<th>Non</th>
 									{% endif %}
+									<th>
+										<form method="POST" action="" style="display: initial;">{% csrf_token %}
+											<input type="hidden" name="id_mission" value="{{mission.id}}">
+											<a id="button" href="{% url 'modifier_missions' mission.id %}" class="btn btn-info" style="padding: 0.06rem .25rem;" title="Editer">
+												<i class="icon-pencil"></i>
+											</a>
+											<button type="submit" class="btn btn-danger" style="padding: 0.06rem .25rem;" name="delete" value="delete">
+												<i class="icon-trash"></i>
+											</button>
+										</form>
+									</th>
 								</tr>
 								{% endif %}
 								{% endfor %}
 							</tbody>
-						 </table>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th>Date début</th>
+									<th>Date fin</th>
+									<th>Client</th>
+									<th>Adresse</th>
+									<th>Consultant</th>
+									<th>Visible consultant</th>
+									<th>Actions</th>
+								</tr>
+							</tfoot>
+						</table>
+
 					</div>
 				</div>
 			</div>
@@ -269,52 +218,75 @@
 				<div class="card">
 					<div class="card-body">
 						<div>
-							<label for="action">Action&nbsp;: 
-								<select name="action_client" id="actionatt" class="form-control1" onchange="fctselectlead()"required="">
-									<option value="0" selected="">---------</option>
-									<option value="supp_element">Supprimés éléments sélectionnés</option>
-									<option value="telecharger_element">Técharger les leads sélectionnés</option>
-								</select>
-							</label>
-							<label for="action2">
-								<input type="hidden" name="select_across" value="0" class="select-across">
-								<button id="button1" type="submit" class="hidden" title="Exécuter l'action sélectionnée" name="index" value="0">Valider</button>
-							</label>
-							<button type="submit" name="export_historique" value="export_historique" id="export_historique" class="btn btn-brand btn-lg btn-twitter" style="float: right;margin-top: -5px;background-color: #00aced!important; border-color: #00aced!important;" title="Exporter les leads de l'historique">
-								<i class="icon-cloud-upload"></i>
-							</button>
+							<div class="action">
+								<label for="action">Action&nbsp;: 
+									<select name="action_missions" id="action" required="" class="form-control1" onchange="fctselect()">
+										<option value="0" selected="">---------</option>
+										<option value="supp_element">Supprimés éléments sélectionnés</option>
+									</select>
+								</label>
+								<label for="action2 pl-1rem">
+									<input type="hidden" name="action2" value="0" class="select-across">
+									<button id="button" type="submit" class="btn" title="Exécuter l'action sélectionnée" name="index" value="0" style="height: 30px">Valider</button>		    
+								</label>
+							</div>
 						</div>
-						<table id="DataTables_Table_1" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;">
+						<table id="DataTables_Table_1" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;overflow: auto;">
 							<thead>
 								<tr>
-									<th><span class="check"><input type="checkbox" id="example-select-all" style="cursor: pointer;"><label style="margin-bottom: 0;" for="example-select-all"></label></span></th>
+									<th><span class="check"><input type="checkbox" id="e-select-all" style="cursor: pointer;"><label style="margin-bottom: 0;" for="e-select-all"></label></span></th>
 									<th>Date début</th>
 									<th>Date fin</th>
 									<th>Client</th>
 									<th>Adresse</th>
 									<th>Consultant</th>
 									<th>Visible consultant</th>
+									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
+								<tr></tr>
 								{% for mission in missions %}
 								{% if mission.status == "E" %}
 								<tr>
-									<th><a href="{% url 'missions' mission.id %}" style="cursor: pointer;float: right;color: #222;border-radius: 100%;"><em style="color: black;font-size: 15px;" class="icon-settings"></em></a></th>
+									<th><span class="check"><input type="checkbox" value="{{mission.id}}" id="{{mission.id}}" name="selection_missions" class="e-check" style="cursor: pointer;"><label style="margin-bottom: 0;" for="{{mission.id}}"></label></span></th>
 									<th>{{ mission.date_debut }}</th>
 									<th>{{ mission.date_fin }}</th>
 									<th>{{ mission.client.nom }}</th>
 									<th>{{ mission.adresse.nom }}</th>
-									<th>{{ mission.consultant.user_django.prenom }} {{ mission.consultant.user_django.nom }}</th>
+									<th>{{ mission.consultant.user_django.first_name }} {{ mission.consultant.user_django.last_name }}</th>
 									{% if mission.visible_consultant == True %}
 									<th>Oui</th>
 									{% else %}
 									<th>Non</th>
 									{% endif %}
+									<th>
+										<form method="POST" action="" style="display: initial;">{% csrf_token %}
+											<input type="hidden" name="id_mission" value="{{mission.id}}">
+											<a id="button" href="{% url 'modifier_missions' mission.id %}" class="btn btn-info" style="padding: 0.06rem .25rem;" title="Editer">
+												<i class="icon-pencil"></i>
+											</a>
+											<button type="submit" class="btn btn-danger" style="padding: 0.06rem .25rem;" name="delete" value="delete">
+												<i class="icon-trash"></i>
+											</button>
+										</form>
+									</th>
 								</tr>
 								{% endif %}
 								{% endfor %}
 							</tbody>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th>Date début</th>
+									<th>Date fin</th>
+									<th>Client</th>
+									<th>Adresse</th>
+									<th>Consultant</th>
+									<th>Visible consultant</th>
+									<th>Actions</th>
+								</tr>
+							</tfoot>
 						</table>
 					</div>
 				</div>
@@ -329,110 +301,82 @@
 				<div class="card">
 					<div class="card-body">
 						<div>
-							<label for="action">Action&nbsp;: 
-								<select name="action_client" id="actionatt" class="form-control1" onchange="fctselectlead()"required="">
-									<option value="0" selected="">---------</option>
-									<option value="supp_element">Supprimés éléments sélectionnés</option>
-									<option value="telecharger_element">Técharger les leads sélectionnés</option>
-								</select>
-							</label>
-							<label for="action2">
-								<input type="hidden" name="select_across" value="0" class="select-across">
-								<button id="button1" type="submit" class="hidden" title="Exécuter l'action sélectionnée" name="index" value="0">Valider</button>
-							</label>
-							<button type="submit" name="export_historique" value="export_historique" id="export_historique" class="btn btn-brand btn-lg btn-twitter" style="float: right;margin-top: -5px;background-color: #00aced!important; border-color: #00aced!important;" title="Exporter les leads de l'historique">
-								<i class="icon-cloud-upload"></i>
-							</button>
+							<div class="action">
+								<label for="action">Action&nbsp;: 
+									<select name="action_missions" id="action" required="" class="form-control1" onchange="fctselect()">
+										<option value="0" selected="">---------</option>
+										<option value="supp_element">Supprimés éléments sélectionnés</option>
+									</select>
+								</label>
+								<label for="action2 pl-1rem">
+									<input type="hidden" name="action2" value="0" class="select-across">
+									<button id="button" type="submit" class="btn" title="Exécuter l'action sélectionnée" name="index" value="0" style="height: 30px">Valider</button>		    
+								</label>
+							</div>
 						</div>
-						<table id="DataTables_Table_2" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;">
+						<table id="DataTables_Table_2" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;overflow: auto;">
 							<thead>
 								<tr>
-									<th><span class="check"><input type="checkbox" id="example-select-all" style="cursor: pointer;"><label style="margin-bottom: 0;" for="example-select-all"></label></span></th>
+									<th><span class="check"><input type="checkbox" id="h-select-all" style="cursor: pointer;"><label style="margin-bottom: 0;" class="h-check" for="h-select-all"></label></span></th>
 									<th>Date début</th>
 									<th>Date fin</th>
 									<th>Client</th>
 									<th>Adresse</th>
 									<th>Consultant</th>
 									<th>Visible consultant</th>
+									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
+								<tr></tr>
 								{% for mission in missions %}
 								{% if mission.status == "H" %}
 								<tr>
-									<th><a href="{% url 'missions' mission.id %}" style="cursor: pointer;float: right;color: #222;border-radius: 100%;"><em style="color: black;font-size: 15px;" class="icon-settings"></em></a></th>
+									<th><span class="check"><input type="checkbox" value="{{mission.id}}" id="{{mission.id}}" name="selection_missions" style="cursor: pointer;"><label style="margin-bottom: 0;" for="{{mission.id}}"></label></span></th>
 									<th>{{ mission.date_debut }}</th>
 									<th>{{ mission.date_fin }}</th>
 									<th>{{ mission.client.nom }}</th>
 									<th>{{ mission.adresse.nom }}</th>
-									<th>{{ mission.consultant.user_django.prenom }} {{ mission.consultant.user_django.nom }}</th>
+									<th>{{ mission.consultant.user_django.first_name }} {{ mission.consultant.user_django.last_name }}</th>
 									{% if mission.visible_consultant == True %}
 									<th>Oui</th>
 									{% else %}
 									<th>Non</th>
 									{% endif %}
+									<th>
+										<form method="POST" action="" style="display: initial;">{% csrf_token %}
+											<input type="hidden" name="id_mission" value="{{mission.id}}">
+											<a id="button" href="{% url 'modifier_missions' mission.id %}" class="btn btn-info" style="padding: 0.06rem .25rem;" title="Editer">
+												<i class="icon-pencil"></i>
+											</a>
+											<button type="submit" class="btn btn-danger" style="padding: 0.06rem .25rem;" name="delete" value="delete">
+												<i class="icon-trash"></i>
+											</button>
+										</form>
+									</th>
 								</tr>
 								{% endif %}
 								{% endfor %}
 							</tbody>
-						</table>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th>Date début</th>
+									<th>Date fin</th>
+									<th>Client</th>
+									<th>Adresse</th>
+									<th>Consultant</th>
+									<th>Visible consultant</th>
+									<th>Actions</th>
+								</tr>
+							</tfoot>
+						 </table>
 					</div>
 				</div>
 			</div>
 		</form>
 <!-- fin item 3 -->
-
 	</div>
-	<!-- Template pop up missions -->
-	<div class="modal fade" id="terms-txt" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="termsLabel">Ajouter une mission :</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<form action="" method="POST" id="post-form"> {% csrf_token %}
-					<div class="modal-body">
-						<label for="date-debut">Date début <span>*</span></label>
-						<input type="date" name="date-debut" id="date-debut" required><br>
-						<label for="date-fin">Date fin <span>*</span></label>
-						<input type="date" name="date-fin" id="date-fin" required><br>
-						<label for="client">Client <span>*</span></label>
-						<select name="client" id="client" required>
-						    <option value="">---------</option>
-						    {% for client in clients %}
-						    <option value="{{client.id}}">{{client.nom}}</option>
-						    {% endfor %}
-						</select><br>
-						<label for="adresse">Adresse <span>*</span></label>
-						<select name="adresse" id="adresse" required>
-						    <option value="">---------</option>
-						    {% for adresse in adresses %}
-						    <option value="{{adresse.id}}">{{adresse.nom}}</option>
-						    {% endfor %}
-						</select><br>
-						<label for="consultant">Consultant :</label>
-						<select name="consultant" id="consultant">
-						    <option value="">---------</option>
-						    {% for consultant in consultants %}
-						    <option value="{{consultant.id}}">{{consultant.user_django.prenom}} {{consultant.user_django.nom}}</option>
-						    {% endfor %}
-						</select><br>
-						<label for="visible_consultant">Visible consultant <span>*</span></label>
-						<label for="visible1" style="width: auto;">Oui</label>
-						<input type="radio" id="visible1" name="visible" value="oui" style="width: 25px;">
-						<label for="visible2" style="width: auto;">Non</label>
-						<input type="radio" id="visible2" name="visible" value="non" style="width: 25px;" checked>
-					</div>
-					<div class="modal-footer">
-						<input type="submit" name="mission-envoyer" value="Ajouter" class="btn_1" style="padding: 0 3px;">
-						<button type="button" class="btn_1" data-dismiss="modal">Fermer</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
 
 {% endblock %}
 
@@ -487,118 +431,18 @@ if (document.getElementsByClassName("alert success alert-dismissible")[0] != nul
 		document.getElementById("fichier_excel").click();
 	}
 }
-//$.fn.dataTableExt.sErrMode = 'throw'
-	var table = $('#DataTables_Table_0').DataTable( {
-		    "lengthMenu": [ [10, 25, 50, 100], [10, 25, 50, 100] ],
-		    "pageLength": 25,
-			"ajax": {
-				"url": "/app/ajax_leads.html",
-				"type": "GET",
-				"dataType": "json",
-				"async": true,
-				"dataSrc": ""
-			 },
-			 "order": [[ 1, "asc" ]],
-			 "language": {
-			"url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
-		},
-			 "columns": [
-					 
 
-		               { "render": function ( data, type, row ) {
-						var id = row.pk;
-							return '<span class="check"><input type="checkbox" value="'+id+'" id="'+id+'" name="validation_telepro" style="cursor: pointer;"><label style="margin-bottom: 0;" for="'+id+'"></label></span>';
-						},
-						"orderable":false
-						},
-					 { "data": "pk" },
-					 { "data": "fields.proprietaire" },
-					 { "data": "fields.chauffage" },
-					 { "data": "fields.region" },
-					 { "data": "fields.nombre_habitant_foyer" },
-					 { "data": "fields.revenu_fiscal" },
-					 { "data": "fields.telephone" },
-					 { "data": "fields.mail" },
-					 {"render": function ( data, type, row ) {
-                     	var date_joined = row.fields.date_de_demande;
-                     	if (date_joined == "None"){
-                     		return '';}
-                     	else{
-                     		var options = {year: 'numeric', month: 'long', day: 'numeric',hour: 'numeric', minute:'numeric'};
-                     		var date_joined = new Date(date_joined)
-                     		return date_joined.toLocaleDateString('fr-FR',options);}
-                        }
-                     },
-					 {"render": function ( data, type, row ) {
-					  var csrf = "{% csrf_token %}"
-					  var datapk = row.pk;
-					  var datapk1 = "edit_clients/"+row.pk;
-						return '<form  method="POST" action="" style="display: initial;"> '+csrf+ '<input type="hidden" name="remove_lead" value="'+datapk+'"><button type="submit" class="btn btn-danger" style="padding: 0.06rem .25rem;" name="delete" value="delete"><i class="icon-trash"></i></button></form>';
-					  },
-					  "orderable":false
-					}
-					 ]
-		 } ); 
-		$('#example-select-all').on('click', function(){
-      // Check/uncheck all checkboxes in the table
-      var rows = table.rows({ 'search': 'applied' }).nodes();
-      $('input[type="checkbox"]', rows).prop('checked', this.checked);
-   });
+$('#a-select-all').on('click', function(){
+    $(':checkbox.a-check').prop('checked', this.checked);
+});
 
-		 var table1 = $('#DataTables_Table_1').DataTable( {
-		 	"pageLength": 25,
-			 "ajax": {
-				 "url": "/app/ajax_historique_leads.html",
-				 "dataType": "json",
-				 "async": true,
-				 "dataSrc": ""
-			 },
-			 "language": {
-			"url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
-		},
+$('#e-select-all').on('click', function(){
+    $(':checkbox.e-check').prop('checked', this.checked);
+});
 
-			 "columns": [
-					 
-					 { "render": function ( data, type, row ) {
-						var id = row.pk;
-							return '<span class="check"><input type="checkbox" value="'+id+'" id="'+id+'" name="lead_historique" style="cursor: pointer;"><label style="margin-bottom: 0;" for="'+id+'"></label></span>';
-						},
-						"orderable":false
-						},
-
-					 { "data": "pk" },
-					 { "data": "fields.proprietaire" },
-					 { "data": "fields.chauffage" },
-					 { "data": "fields.region" },
-					 { "data": "fields.nombre_habitant_foyer" },
-					 { "data": "fields.revenu_fiscal" },
-					 { "data": "fields.telephone" },
-					 { "data": "fields.mail" },
-					 {"render": function ( data, type, row ) {
-                     	var date_joined = row.fields.date_de_demande;
-                     	if (date_joined == "None"){
-                     		return '';}
-                     	else{
-                     		var options = {year: 'numeric', month: 'long', day: 'numeric',hour: 'numeric', minute:'numeric'};
-                     		var date_joined = new Date(date_joined)
-                     		return date_joined.toLocaleDateString('fr-FR',options);}
-                        }
-                     },
-					 {"render": function ( data, type, row ) {
-					  var csrf = "{% csrf_token %}"
-					  var datapk = row.pk;
-					  var datapk1 = "edit_clients/"+row.pk;
-						return '<form  method="POST" action="" style="display: initial;"> '+csrf+ '<input type="hidden" name="remove_lead" value="'+datapk+'"><button type="submit" class="btn btn-danger" style="padding: 0.06rem .25rem;" name="delete" value="delete"><i class="icon-trash"></i></button></form>';
-					  },
-					  "orderable":false
-					}
-					 ]
-		 } ); 
-		$('#example-select-all-1').on('click', function(){
-      // Check/uncheck all checkboxes in the table
-      var rows = table1.rows({ 'search': 'applied' }).nodes();
-      $('input[type="checkbox"]', rows).prop('checked', this.checked);
-   });
+$('#h-select-all').on('click', function(){
+    $(':checkbox.h-check').prop('checked', this.checked);
+});
 </script>
 
 {% endblock %}

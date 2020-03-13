@@ -1,0 +1,103 @@
+{% extends 'base_planning.html' %}
+{% load staticfiles %} 
+
+{% block link %} 
+<link href="{% static 'application/css/dataTables.bootstrap4.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<style>
+	label {
+		display: inline-block;
+		width: 130px;
+	}
+	input, select {
+		width: 200px;
+		height: auto;
+	}
+	span {
+		color: #f00;
+	}
+</style>
+
+<div class="flex-row align-items-center">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<i class="icon-note"></i> Ajouter un consultant
+						<div class="card-header-actions">
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<!-- ajouter consultant -->
+								<form  method='POST'  action='' autocomplete="off"> {% csrf_token %}
+									<label for="user">User <span>*</span></label>
+									<select name="user" id="user" required>
+									    <option value="">---------</option>
+									    {% for user in user_django %}
+									    {% if user.username != 'sherpa' %}
+									    <option value="{{user.username}}">{{user.first_name}} {{ user.last_name }}</option>
+									    {% endif %}
+									    {% endfor %}
+									</select><br>
+
+									<label for="telephone">Téléphone <span>*</span></label>
+									<input type="text" name="telephone" id="telephone" required><br>
+
+									<label for="adresse">Adresse <span>*</span></label>
+									<input type="text" name="adresse" id="adresse" required><br>
+									
+									<label for="permission">Permission <span>*</span></label>
+									<label for="permission1" style="width: auto;">Oui</label>
+									<input type="radio" id="permission1" name="permission" value="oui" style="width: 25px;">
+									<label for="permission2" style="width: auto;">Non</label>
+									<input type="radio" id="permission2" name="permission" value="non" style="width: 25px;" checked><br>
+
+									<label for="junior">Thème junior <span>*</span></label>
+									<select name="junior" id="junior" multiple required>
+									    <option value="">---------</option>
+									    {% for theme in themes %}
+									    <option value="{{theme.id}}">{{theme.nom}}</option>
+									    {% endfor %}
+									</select><br>
+									<label for="confirme">Thème confirmé <span>*</span></label>
+									<select name="confirme" id="confirme" multiple required>
+									    <option value="">---------</option>
+									    {% for theme in themes %}
+									    <option value="{{theme.id}}">{{theme.nom}}</option>
+									    {% endfor %}
+									</select><br>
+									<label for="senior">Thème senior <span>*</span></label>
+									<select name="senior" id="senior" multiple required>
+									    <option value="">---------</option>
+									    {% for theme in themes %}
+									    <option value="{{theme.id}}">{{theme.nom}}</option>
+									    {% endfor %}
+									</select><br>
+
+									<label for="archive">Archive <span>*</span></label>
+									<label for="archive1" style="width: auto;">Oui</label>
+									<input type="radio" id="archive1" name="archive" value="oui" style="width: 25px;">
+									<label for="archive2" style="width: auto;">Non</label>
+									<input type="radio" id="archive2" name="archive" value="non" style="width: 25px;" checked>
+
+									<div class="form-group">
+										<button class="btn btn-primary" type="submit" name="add" value="add">Ajouter</button>
+										<a href="{% url 'consultants' %}" style="float: right;margin-top: 10px;">Retour</a>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

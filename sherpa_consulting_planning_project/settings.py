@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     #les applications
     'compte',
     'planning',
-
     #les import de django allauth
     'django.contrib.sites',
     'allauth',

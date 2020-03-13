@@ -5,23 +5,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 
-class Bdd_user_django(models.Model):
-
-	id = models.AutoField(primary_key = True)
-	nom_de_compte = models.CharField(default=' ',max_length=400)
-	mdp = models.CharField(default=' ',max_length=400)
-	mail = models.EmailField(max_length = 254)
-	nom = models.CharField(default=' ',max_length=400)
-	prenom = models.CharField(default=' ',max_length=400)
-	
-	class Meta:
-		verbose_name = "User Django"
-		ordering = ['id']
-	
-	def __str__(self):
-		return self.nom_de_compte
-
-
 class Bdd_theme(models.Model):
 
 	id = models.AutoField(primary_key = True)
@@ -42,7 +25,7 @@ class Bdd_consultants(models.Model):
 	telephone = models.CharField(default=' ',max_length=400)
 	adresse = models.CharField(default=' ',max_length=400)
 	permission = models.BooleanField(default=False)
-	user_django = models.OneToOneField(Bdd_user_django, related_name='user_django', default='')
+	user_django = models.OneToOneField(User, related_name='user_django')
 	theme_junior = models.ManyToManyField(Bdd_theme, related_name='theme_junior')
 	theme_confirme = models.ManyToManyField(Bdd_theme, related_name='theme_confirme')
 	theme_senior = models.ManyToManyField(Bdd_theme, related_name='theme_senior')
@@ -53,7 +36,7 @@ class Bdd_consultants(models.Model):
 		ordering = ['id']
 	
 	def __str__(self):
-		return self.user_django.nom
+		return self.user_django.first_name+' '+self.user_django.last_name
 
 
 class Bdd_piece_jointe_client(models.Model):
@@ -95,7 +78,7 @@ class Bdd_client(models.Model):
 	mission_type = models.ManyToManyField(Bdd_mission_type_client)
 	archive = models.BooleanField(default=False)
 	
-	class Meta:
+	class Meta: 
 		verbose_name = "Client"
 		ordering = ['id']
 	
@@ -148,8 +131,8 @@ class Bdd_missions(models.Model):
 class Bdd_messages(models.Model):
 
 	id = models.AutoField(primary_key = True)
-	envoyeur = models.ForeignKey('Bdd_user_django', related_name='envoyeur')
-	receveur = models.ForeignKey('Bdd_user_django', related_name='receveur')
+	envoyeur = models.ForeignKey(User, related_name='envoyeur')
+	receveur = models.ForeignKey(User, related_name='receveur')
 	message = models.TextField()
 	date = models.DateTimeField(default=timezone.now, verbose_name="Date d'envoi")
 	lu = models.BooleanField(default = False)
@@ -160,3 +143,4 @@ class Bdd_messages(models.Model):
 	
 	def __str__(self):
 		return self.message
+		

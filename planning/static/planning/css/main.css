@@ -14,7 +14,6 @@
 }
 
 
-
 #onglets li{
     position: relative;
     float: left;
@@ -26,8 +25,7 @@
     color: #23282c;
     z-index: 1;
 }
-
-#onglets .actif{
+    #onglets .actif{
     background-color: #38a8d8;
     color: white;
 }
@@ -254,7 +252,7 @@ input[type=checkbox]
     margin-right: 5px;
 }
 .label-success {
-    background-color: #3ac47d;
+    background-color: #8ad919;
 }
 
 /* navbar envelope et notif */
@@ -321,7 +319,7 @@ input[type=checkbox]
     border-radius: 9999px;
 }
 .label-info {
-    background-color: #f74044;
+    background-color: #e92f5b;
 }
 .label {
     display: inline;

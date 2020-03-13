@@ -1,0 +1,70 @@
+{% extends 'base_planning.html' %}
+{% load staticfiles %} 
+
+{% block link %} 
+<link href="{% static 'application/css/dataTables.bootstrap4.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<style>
+	label {
+		display: inline-block;
+		width: 130px;
+	}
+	input, select {
+		width: 200px;
+		height: auto;
+	}
+	span {
+		color: #f00;
+	}
+</style>
+
+<div class="flex-row align-items-center">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<i class="icon-note"></i> Ajouter un client
+						<div class="card-header-actions">
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<!-- ajouter client -->
+								<form  method='POST'  action='' autocomplete="off"> {% csrf_token %}
+									<label for="nom">Nom <span>*</span></label>
+									<input type="text" name="nom" id="nom" required><br>
+									<label for="couleur">Code couleur <span>*</span></label>
+									<input type="text" name="couleur" id="couleur" required><br>
+									<label for="type">Type mission <span>*</span></label>
+									<select name="type" id="type" multiple required>
+									    <option value="">---------</option>
+									    {% for type in mission_types %}
+									    <option value="{{type.id}}">{{type.nom}}</option>
+									    {% endfor %}
+									</select><br>
+									<label for="archive">Archive <span>*</span></label>
+									<label for="archive1" style="width: auto;">Oui</label>
+									<input type="radio" id="archive1" name="archive" value="oui" style="width: 25px;">
+									<label for="archive2" style="width: auto;">Non</label>
+									<input type="radio" id="archive2" name="archive" value="non" style="width: 25px;" checked>
+
+									<div class="form-group">
+										<button class="btn btn-primary" type="submit" name="add" value="add">Ajouter</button>
+										<a href="{% url 'clients' %}" style="float: right;margin-top: 10px;">Retour</a>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
